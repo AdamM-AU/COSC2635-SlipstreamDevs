@@ -1,5 +1,6 @@
 # Project Source Code
 This folder contains all source code used in active deployment of the project AKA the deliverable.
+
 NOTE: This project uses composer
 
 # Files
