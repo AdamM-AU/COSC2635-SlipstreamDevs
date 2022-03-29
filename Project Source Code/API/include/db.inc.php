@@ -19,7 +19,7 @@ try {
 	// Connection attributes
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Errormode --> exceptions
 
-// Catch Errors and the error message	
+// Catch Errors and write out the error message
 } catch (PDOException $e) {
 	echo "Database Error: ".$e->getMessage();
 } catch (Exception $e) {
