@@ -9,4 +9,4 @@ NOTE: This project uses composer
  - /js - Contains all the JavaScript Libraries that we are using or have created
  - /images - Contains all images used by the project
  - /upload - Contains any files uploaded and attached to tickets
- - /vendor - Contains COMPOSER installed external librarys
+ - /vendor - Contains COMPOSER installed external libraries
