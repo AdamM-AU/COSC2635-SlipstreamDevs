@@ -63,8 +63,8 @@ if ($username === NULL || $password === NULL) {
 				}
 				
 				// SET SESSION VARIABLES
-				$_SESSION['UserID'] = $UserID;
-				$_SESSION['Access'] = $AccessLevel
+				$_SESSION['UserID'] = $UserID; // This will be used over and over when running other database transactions 
+				$_SESSION['Access'] = $AccessLevel // This will be checked over and over while running database transactions, in case access level changes, mostly to display access level to the user on the dashboard
 				
 				// Send positive response to AJax form to redirect the user
 				$response = array("status" => 1, "message" => "");
