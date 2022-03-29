@@ -13,10 +13,11 @@ if(isset($_GET['task']) && !empty($_GET['task'])) {
 }
  
 switch ($ReqTask) {
+	// ----- USER CONTROL ----- //
 	// User Management - Add User
 	case "UserAdd":
 		echo "User Management - Add User";
-		die();
+		die(); // Kill the script do not process any further as we are done here
 	 
 	// User Management - Delete User
 	case "UserDel":
@@ -32,11 +33,40 @@ switch ($ReqTask) {
 	case "UserPass":
 		echo "User Management - User Password Change";
 		die();
+
+	// User Management - List Users
+	case "UserList":
+		echo "User Management - List Users";
+		die();
 	
+	// ----- GROUP CONTROL ----- //
+	
+	// Group Management - Create Group
+	case "GroupCreate":
+		echo "Group Management - Create Group";
+		die();
+		
+	// Group Management - Delete Group
+	case "GroupDel":
+		echo "Group Management - Delete Group";
+		die();
+
+	// Group Management - Group Add Member
+	case "GroupMemberAdd":
+		echo "Group Management - Add Group Memever";
+		die();
+
+	// Group Management - Group Delete Member
+	case "GroupMemberDel":
+		echo "Group Management - Delete Group Member";
+		die();
+		
+	// ----- END OF DEFINED TASKS ----- //
+		
 	// Catch all
 	default:
 		echo "Task Not Found!";
 		die();
 }
- 
+
 ?>
