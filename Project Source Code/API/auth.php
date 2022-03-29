@@ -22,11 +22,38 @@ if ($username === NULL || $password === NULL) {
 	// We have both username and password, lets attempt to verify them
 	
 	// Check if username exists in user table, if not error!
+	$pdo->prepare('SELECT UserID FROM Users WHERE Username=?');
+	$pdo->execute([ $username ]);
+	$result = $pdo->fetch();
 	
-	// Check password against matching username, if no match error
-	
-	// IF username and password are golden, create a session and attach session variables
-	// and redirect user to dashboard
+	if (empty($result['UserID'])) {
+		echo "ERROR: Incorrect username and/or password!";
+	} else {
+		// We have a matching Username, lets store the UserID for the session and check the password
+		$UserID = $result['UserID']; // Store this for reuse
+		$pdo->prepare('SELECT Password FROM Users WHERE UserID=?');
+		$pdo->execute([ $password ]); // Password wont be plain text down the track
+		$result = $pdo->fetch();
+		
+		if (empty($result['Password'])) {
+			// User has no password?!?!?
+			// Throw an error, because that shouldnt happen!
+			echo "ERROR: Incorrect username and/or password!";
+		} else {
+			// run the hash verification
+			$verified = password_verify($password, $result['Password']);
+			
+			if ($verified) {
+				// We have a match made in heaven!
+				// CREATE SESSION!
+				// SET SESSION VARIABLES
+				// REDIRECT USER TO DASHBOARD
+			} else {
+				// No Match puke out the gerneral error message...
+				echo "ERROR: Incorrect username and/or password!";
+			}
+		}
+	}
 }
  
  ?>
