@@ -10,8 +10,20 @@
  require_once('includes/db.inc.php');
  
  // Fetch form posted variables
-$username = $_POST['user'] ?? NULL; // IF no $_POST['user'], then it will be set to NULL
-$password = $_POST['pass'] ?? NULL;
+
+// IF no $_POST['user'] is set or it is set but empty, then it will be set to NULL
+if(isset($_POST['user']) && !empty($_POST['user'])) {
+    $username = $_POST['user'];
+} else {
+	$username = NULL;
+}
+
+// IF no $_POST['pass'] is set or it is set but empty, then it will be set to NULL
+if(isset($_POST['pass']) && !empty($_POST['pass'])) {
+    $password = $_POST['pass'];
+} else {
+	$password = NULL;
+}
 
 if ($username === NULL || $password === NULL) {
 	// IF $username OR $password is non-existant we throw back an error to the form.
