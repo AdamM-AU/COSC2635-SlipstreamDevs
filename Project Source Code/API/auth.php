@@ -40,7 +40,7 @@ if ($username === NULL || $password === NULL) {
 		$result = $pdo->fetch();
 		
 		if (empty($result['Password'])) {
-			// User has no password?!?!?
+			// User has no password in the database?!?!? GREAT SCOTT!
 			// Throw an error, because that shouldnt happen!
 			$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!");
 			echo json_encode($response);
