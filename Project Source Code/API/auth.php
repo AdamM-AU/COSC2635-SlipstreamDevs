@@ -16,18 +16,22 @@ $password = $_POST['pass'] ?? NULL;
 if ($username === NULL || $password === NULL) {
 	// IF $username OR $password is non-existant we throw back an error to the form.
 	// We do not indicate a specific reason as this would make it easy to determine usernames
-	echo "ERROR: Incorrect username and/or password!";
+	
+	// $response is an associative array
+	$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!"); //status: 0 = bad, 1 = good.    message = the message the form will display when status is 0
+	echo json_encode($response); // encode php array as a JSON 
 
 } else {
 	// We have both username and password, lets attempt to verify them
 	
 	// Check if username exists in user table, if not error!
-	$pdo->prepare('SELECT UserID FROM Users WHERE Username=?');
-	$pdo->execute([ $username ]);
-	$result = $pdo->fetch();
+	$pdo->prepare('SELECT UserID FROM Users WHERE Username=?'); // Our Query, variables passed in are --> ? <---
+	$pdo->execute([ $username ]); // fill the variables (?) in order and execute the query 
+	$result = $pdo->fetch(); // Fetch the result of the query :)
 	
 	if (empty($result['UserID'])) {
-		echo "ERROR: Incorrect username and/or password!";
+		$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!");
+		echo json_encode($response);
 	} else {
 		// We have a matching Username, lets store the UserID for the session and check the password
 		$UserID = $result['UserID']; // Store this for reuse
@@ -38,7 +42,8 @@ if ($username === NULL || $password === NULL) {
 		if (empty($result['Password'])) {
 			// User has no password?!?!?
 			// Throw an error, because that shouldnt happen!
-			echo "ERROR: Incorrect username and/or password!";
+			$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!");
+			echo json_encode($response);
 		} else {
 			// run the hash verification
 			$verified = password_verify($password, $result['Password']);
@@ -60,10 +65,14 @@ if ($username === NULL || $password === NULL) {
 				// SET SESSION VARIABLES
 				$_SESSION['UserID'] = $UserID;
 				$_SESSION['Access'] = $AccessLevel
-				echo ''; // RESPONSES should probably be JSON payloads to make the JS simpler
+				
+				// Send positive response to AJax form to redirect the user
+				$response = array("status" => 1, "message" => "");
+				echo json_encode($response);
 			} else {
 				// No Match puke out the gerneral error message...
-				echo "ERROR: Incorrect username and/or password!";
+				$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!");
+				echo json_encode($response);
 			}
 		}
 	}
