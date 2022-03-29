@@ -32,7 +32,7 @@ if ($username === NULL || $password === NULL) {
 		// We have a matching Username, lets store the UserID for the session and check the password
 		$UserID = $result['UserID']; // Store this for reuse
 		$pdo->prepare('SELECT Password FROM Users WHERE UserID=?');
-		$pdo->execute([ $password ]); // Password wont be plain text down the track
+		$pdo->execute([ $UserID ]);
 		$result = $pdo->fetch();
 		
 		if (empty($result['Password'])) {
@@ -44,10 +44,23 @@ if ($username === NULL || $password === NULL) {
 			$verified = password_verify($password, $result['Password']);
 			
 			if ($verified) {
-				// We have a match made in heaven!
+				// We have a match made in heaven <3 <3
+			
+				// Fetch the users access level!
+				$pdo->prepare('SELECT AccessLevel FROM Users WHERE UserID=?');
+				$pdo->execute([ $UserID ]);
+				$result = $pdo->fetch();
+				$AccessLevel = $result['AccessLevel'];
+				
 				// CREATE SESSION!
+				if (session_status() === PHP_SESSION_NONE) {
+					session_start();
+				}
+				
 				// SET SESSION VARIABLES
-				// REDIRECT USER TO DASHBOARD
+				$_SESSION['UserID'] = $UserID;
+				$_SESSION['Access'] = $AccessLevel
+				echo ''; // RESPONSES should probably be JSON payloads to make the JS simpler
 			} else {
 				// No Match puke out the gerneral error message...
 				echo "ERROR: Incorrect username and/or password!";
