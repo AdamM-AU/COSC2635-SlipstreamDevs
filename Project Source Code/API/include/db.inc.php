@@ -14,6 +14,9 @@
 
 // Attempt connection to the database
 try {
+	// IF database is non-existant should we create a brand spanking new one?
+	
+	// Connection information
 	$pdo = new PDO("sqlite:$databaseFile");
 	
 	// Connection attributes
