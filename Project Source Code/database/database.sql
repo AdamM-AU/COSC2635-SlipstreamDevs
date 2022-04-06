@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.3.3 on Wed Apr 6 22:17:16 2022
+-- File generated with SQLiteStudio v3.3.3 on Wed Apr 6 22:19:36 2022
 --
 -- Text encoding used: System
 --
@@ -8,6 +8,15 @@ BEGIN TRANSACTION;
 
 -- Table: Assets
 CREATE TABLE Assets (AssetID INTEGER PRIMARY KEY AUTOINCREMENT);
+
+-- Table: FileUploads
+CREATE TABLE FileUploads (UploadID INTEGER PRIMARY KEY AUTOINCREMENT);
+
+-- Table: ScheduledTasks
+CREATE TABLE ScheduledTasks (TaskID INTEGER PRIMARY KEY AUTOINCREMENT);
+
+-- Table: TicketComments
+CREATE TABLE TicketComments (CommentID INTEGER PRIMARY KEY AUTOINCREMENT, TicketID INTEGER REFERENCES Tickets (TicketID) NOT NULL);
 
 -- Table: TicketPriority
 CREATE TABLE TicketPriority (PriorityID INTEGER PRIMARY KEY AUTOINCREMENT, Title VARCHAR, Description VARCHAR);
