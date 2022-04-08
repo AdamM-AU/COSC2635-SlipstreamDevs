@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.3.3 on Wed Apr 6 22:19:36 2022
+-- File generated with SQLiteStudio v3.3.3 on Fri Apr 8 21:01:58 2022
 --
 -- Text encoding used: System
 --
@@ -7,16 +7,16 @@ PRAGMA foreign_keys = off;
 BEGIN TRANSACTION;
 
 -- Table: Assets
-CREATE TABLE Assets (AssetID INTEGER PRIMARY KEY AUTOINCREMENT);
+CREATE TABLE Assets (AssetID INTEGER PRIMARY KEY AUTOINCREMENT, AssetType VARCHAR, AquistionDate DATE, AssetESL VARCHAR, AquisitionExpense NUMERIC, AssetLocation VARCHAR, MaintenanceInterval VARCHAR, RegistationRequired BOOLEAN, AuthorityInspectionReq TEXT, LicenseReq TEXT);
 
 -- Table: FileUploads
-CREATE TABLE FileUploads (UploadID INTEGER PRIMARY KEY AUTOINCREMENT);
+CREATE TABLE FileUploads (UploadID INTEGER PRIMARY KEY AUTOINCREMENT, TicketID INTEGER REFERENCES Tickets (TicketID), CommentID INTEGER REFERENCES TicketComments (CommentID), DateCreated DATETIME, OriginalFileName VARCHAR, MD5FileName VARCHAR, UserID REFERENCES Users (UserID));
 
 -- Table: ScheduledTasks
-CREATE TABLE ScheduledTasks (TaskID INTEGER PRIMARY KEY AUTOINCREMENT);
+CREATE TABLE ScheduledTasks (TaskID INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR, Description VARCHAR, TaskCreatorUserID INTEGER REFERENCES Users (UserID), TicketTitle VARCHAR, TicketContent VARCHAR, Status INTEGER REFERENCES TicketStatus (StatusID), Priority INTEGER REFERENCES TicketPriority (PriorityID), AssignedGroup INTEGER REFERENCES UserGroups (GroupID), AssignedUser INTEGER REFERENCES Users (UserID), AssignedAsset INTEGER REFERENCES Assets (AssetID), Interval VARCHAR);
 
 -- Table: TicketComments
-CREATE TABLE TicketComments (CommentID INTEGER PRIMARY KEY AUTOINCREMENT, TicketID INTEGER REFERENCES Tickets (TicketID) NOT NULL);
+CREATE TABLE TicketComments (CommentID INTEGER PRIMARY KEY AUTOINCREMENT, TicketID INTEGER REFERENCES Tickets (TicketID) NOT NULL, DateCreated DATETIME, UserID INTEGER REFERENCES Users (UserID), GroupID INTEGER REFERENCES UserGroups (GroupID), Comment TEXT, WasStatusUpdate BOOLEAN);
 
 -- Table: TicketPriority
 CREATE TABLE TicketPriority (PriorityID INTEGER PRIMARY KEY AUTOINCREMENT, Title VARCHAR, Description VARCHAR);
@@ -31,7 +31,7 @@ INSERT INTO TicketPriority (PriorityID, Title, Description) VALUES (9, 'Complete
 INSERT INTO TicketPriority (PriorityID, Title, Description) VALUES (10, 'Resolved', NULL);
 
 -- Table: Tickets
-CREATE TABLE Tickets (TicketID INTEGER PRIMARY KEY AUTOINCREMENT, Priority INTEGER REFERENCES TicketPriority (PriorityID), Status INTEGER REFERENCES TicketStatus (StatusID), Title VARCHAR, UserGroup INTEGER REFERENCES UserGroups (GroupID), UserID INTEGER REFERENCES Users (UserID), Created DATETIME, Comment TEXT, Asset REFERENCES Assets (AssetID));
+CREATE TABLE Tickets (TicketID INTEGER PRIMARY KEY AUTOINCREMENT, Priority INTEGER REFERENCES TicketPriority (PriorityID), Status INTEGER REFERENCES TicketStatus (StatusID), Title VARCHAR, UserGroup INTEGER REFERENCES UserGroups (GroupID), UserID INTEGER REFERENCES Users (UserID), Created DATETIME, Comment TEXT, Asset INTEGER REFERENCES Assets (AssetID));
 
 -- Table: TicketStatus
 CREATE TABLE TicketStatus (StatusID INTEGER PRIMARY KEY AUTOINCREMENT, Title VARCHAR, Description VARCHAR);
