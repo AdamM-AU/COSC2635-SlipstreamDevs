@@ -7,7 +7,7 @@
  * Last Modified: 2022/03/29 By Adam Mutimer
  */
  require_once('config.php');
- require_once('includes/db.inc.php');
+ require_once('include/db.inc.php');
  
  // Fetch form posted variables
 
@@ -30,31 +30,31 @@ if ($username === NULL || $password === NULL) {
 	// We do not indicate a specific reason as this would make it easy to determine usernames
 	
 	// $response is an associative array
-	$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!"); //status: 0 = bad, 1 = good.    message = the message the form will display when status is 0
+	$response = array("status" => 0, "message" => "Incorrect username and/or password!"); //status: 0 = bad, 1 = good.    message = the message the form will display when status is 0
 	echo json_encode($response); // encode php array as a JSON 
 
 } else {
 	// We have both username and password, lets attempt to verify them
 	
 	// Check if username exists in user table, if not error!
-	$pdo->prepare('SELECT UserID FROM Users WHERE Username=?'); // Our Query, variables passed in are --> ? <---
-	$pdo->execute([ $username ]); // fill the variables (?) in order and execute the query 
-	$result = $pdo->fetch(); // Fetch the result of the query :)
+	$query = $pdo->prepare('SELECT UserID FROM Users WHERE Username=?'); // Our Query, variables passed in are --> ? <---
+	$query->execute([ $username ]); // fill the variables (?) in order and execute the query 
+	$result = $query->fetch(); // Fetch the result of the query :)
 	
 	if (empty($result['UserID'])) {
-		$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!");
+		$response = array("status" => 0, "message" => "Incorrect username and/or password!");
 		echo json_encode($response);
 	} else {
 		// We have a matching Username, lets store the UserID for the session and check the password
 		$UserID = $result['UserID']; // Store this for reuse
-		$pdo->prepare('SELECT Password FROM Users WHERE UserID=?');
-		$pdo->execute([ $UserID ]);
-		$result = $pdo->fetch();
+		$query = $pdo->prepare('SELECT Password FROM Users WHERE UserID=?');
+		$query->execute([ $UserID ]);
+		$result = $query->fetch();
 		
 		if (empty($result['Password'])) {
 			// User has no password in the database?!?!? GREAT SCOTT!
 			// Throw an error, because that shouldnt happen!
-			$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!");
+			$response = array("status" => 0, "message" => "Incorrect username and/or password!");
 			echo json_encode($response);
 		} else {
 			// run the hash verification
@@ -64,9 +64,9 @@ if ($username === NULL || $password === NULL) {
 				// We have a match made in heaven <3 <3
 			
 				// Fetch the users access level!
-				$pdo->prepare('SELECT AccessLevel FROM Users WHERE UserID=?');
-				$pdo->execute([ $UserID ]);
-				$result = $pdo->fetch();
+				$query = $pdo->prepare('SELECT AccessLevel FROM Users WHERE UserID=?');
+				$query->execute([ $UserID ]);
+				$result = $query->fetch();
 				$AccessLevel = $result['AccessLevel'];
 				
 				// CREATE SESSION!
@@ -76,14 +76,14 @@ if ($username === NULL || $password === NULL) {
 				
 				// SET SESSION VARIABLES
 				$_SESSION['UserID'] = $UserID; // This will be used over and over when running other database transactions 
-				$_SESSION['Access'] = $AccessLevel // This will be checked over and over while running database transactions, in case access level changes, mostly to display access level to the user on the dashboard
+				$_SESSION['Access'] = $AccessLevel; // This will be checked over and over while running database transactions, in case access level changes, mostly to display access level to the user on the dashboard
 				
 				// Send positive response to AJax form to redirect the user
 				$response = array("status" => 1, "message" => "");
 				echo json_encode($response);
 			} else {
 				// No Match puke out the gerneral error message...
-				$response = array("status" => 0, "message" => "ERROR: Incorrect username and/or password!");
+				$response = array("status" => 0, "message" => "Incorrect username and/or password!");
 				echo json_encode($response);
 			}
 		}
