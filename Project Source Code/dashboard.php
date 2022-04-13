@@ -29,7 +29,7 @@ if(isset($_GET['module'])) {
 	
 	// Group Management Module
 	case 'groupMod':
-		echo "<h2>User Control Module</h2>";
+		echo "<h2>Group Control Module</h2>";
 		break;
 	
 	default:
