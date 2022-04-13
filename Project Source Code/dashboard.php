@@ -1,12 +1,20 @@
 <?PHP
-/* Check if user has logged in via API by checking for session variable
- *	- Check if username session variable is set?
- *	- if not set destroy the session and redirect to login form
+/* dashboard.php - The Core of the U.I
+ * 		The code here determines what sub modules of code to include based off
+ *		the users input.
  *
  * Last Modified: 2022/04/13 By Adam Mutimer (s3875753)
 */
-session_start();
 
+// CREATE SESSION!
+if (session_status() === PHP_SESSION_NONE) {
+	session_start();
+}
+
+/* Check if user has logged in via API by checking for session variable
+ *	- Check if username session variable is set?
+ *	- if not set destroy the session and redirect to login form
+ */
 if (!isset($_SESSION['Username'])) {	
 	session_destroy();
     header('Location: index.html');
@@ -24,12 +32,12 @@ if(isset($_GET['module'])) {
 	switch($requestedModule) {
 	// User Management Module
 	case 'userMod':
-		echo "<h2>User Control Module</h2>";
+		require('modules/userMod.php');
 		break;
 	
 	// Group Management Module
 	case 'groupMod':
-		echo "<h2>Group Control Module</h2>";
+		require('modules/groupMod.php');
 		break;
 	
 	default:
