@@ -54,7 +54,7 @@ if ($username === NULL || $password === NULL) {
 		if (empty($result['Password'])) {
 			// User has no password in the database?!?!? GREAT SCOTT!
 			// Throw an error, because that shouldnt happen!
-			$response = array("status" => 0, "message" => "Incorrect username and/or password!");
+			$response = array("status" => 0, "message" => "Incorrect username and/or password! 000");
 			echo json_encode($response);
 		} else {
 			// run the hash verification
@@ -64,10 +64,10 @@ if ($username === NULL || $password === NULL) {
 				// We have a match made in heaven <3 <3
 			
 				// Fetch the users access level!
-				$query = $pdo->prepare('SELECT AccessLevel FROM Users WHERE UserID=?');
+				$query = $pdo->prepare('SELECT AdminAccess FROM Users WHERE UserID=?');
 				$query->execute([ $UserID ]);
 				$result = $query->fetch();
-				$AccessLevel = $result['AccessLevel'];
+				$AccessLevel = $result['AdminAccess'];
 				
 				// CREATE SESSION!
 				if (session_status() === PHP_SESSION_NONE) {
@@ -75,6 +75,7 @@ if ($username === NULL || $password === NULL) {
 				}
 				
 				// SET SESSION VARIABLES
+				$_SESSION['Username'] = $username;
 				$_SESSION['UserID'] = $UserID; // This will be used over and over when running other database transactions 
 				$_SESSION['Access'] = $AccessLevel; // This will be checked over and over while running database transactions, in case access level changes, mostly to display access level to the user on the dashboard
 				
@@ -83,7 +84,7 @@ if ($username === NULL || $password === NULL) {
 				echo json_encode($response);
 			} else {
 				// No Match puke out the gerneral error message...
-				$response = array("status" => 0, "message" => "Incorrect username and/or password!");
+				$response = array("status" => 0, "message" => "Incorrect username and/or password! 111");
 				echo json_encode($response);
 			}
 		}
