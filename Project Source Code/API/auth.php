@@ -54,7 +54,7 @@ if ($username === NULL || $password === NULL) {
 		if (empty($result['Password'])) {
 			// User has no password in the database?!?!? GREAT SCOTT!
 			// Throw an error, because that shouldnt happen!
-			$response = array("status" => 0, "message" => "Incorrect username and/or password! 000");
+			$response = array("status" => 0, "message" => "Incorrect username and/or password!");
 			echo json_encode($response);
 		} else {
 			// run the hash verification
@@ -84,7 +84,7 @@ if ($username === NULL || $password === NULL) {
 				echo json_encode($response);
 			} else {
 				// No Match puke out the gerneral error message...
-				$response = array("status" => 0, "message" => "Incorrect username and/or password! 111");
+				$response = array("status" => 0, "message" => "Incorrect username and/or password!");
 				echo json_encode($response);
 			}
 		}
