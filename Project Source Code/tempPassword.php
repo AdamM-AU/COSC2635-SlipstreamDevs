@@ -1,7 +1,7 @@
 <?PHP
 /* This file is used to generate random passwords and the hash for 
  * the password to be assigned to a user in the database.
- *
+ * Last Modified: 2022/04/13 By Adam Mutimer (s3875753)
  */
 
 function RandomString($length = 10) {

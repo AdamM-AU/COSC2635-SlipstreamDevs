@@ -4,7 +4,7 @@
  * Notes: I have made this a seperate file so PHP dosnt need to process 
  *		  all api functions at each login attempt.
  *
- * Last Modified: 2022/03/29 By Adam Mutimer
+ * Last Modified: 2022/03/29 By Adam Mutimer (s3875753)
  */
  require_once('config.php');
  require_once('include/db.inc.php');

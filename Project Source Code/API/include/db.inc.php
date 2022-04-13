@@ -7,7 +7,7 @@
  *			with minimal code changes.
  *	  		PDO->Prepare() also lets us prevent SQL injection attacks! 
  *
- * Last Modified: 2022/03/29 - By Adam Mutimer
+ * Last Modified: 2022/03/29 - By Adam Mutimer (s3875753)
  */
  
  $databaseFile = "../database/database.db";
