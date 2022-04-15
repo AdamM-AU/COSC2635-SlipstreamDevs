@@ -81,3 +81,8 @@ body {
             border: 1px solid #ced4da;
             border-radius: 0;
         }
+		
+		/** Logo **/
+		.rotate-n-15 {
+			transform: rotate(-15deg);
+		}
