@@ -5,6 +5,7 @@
  *
  * Last Modified: 2022/04/13 By Adam Mutimer (s3875753)
 */
+require_once('API/config.php');
 
 // CREATE SESSION!
 if (session_status() === PHP_SESSION_NONE) {

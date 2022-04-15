@@ -4,6 +4,7 @@
  *
  * Last Modified: 2022/04/13 By Adam Mutimer (s3875753)
 */
+require_once('API/config.php');
 
 if (isset($_GET["task"])) {
 	$task = $_GET["task"];
