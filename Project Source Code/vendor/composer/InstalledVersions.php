@@ -63,18 +63,18 @@ private static $installed = array (
     ),
     'twbs/bootstrap' => 
     array (
-      'pretty_version' => 'v4.1.3',
-      'version' => '4.1.3.0',
+      'pretty_version' => 'v4.6.1',
+      'version' => '4.6.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '3b558734382ce58b51e5fc676453bfd53bba9201',
+      'reference' => '043a03c95a2ad6738f85b65e53b9dbdfb03b8d10',
     ),
     'twitter/bootstrap' => 
     array (
       'replaced' => 
       array (
-        0 => 'v4.1.3',
+        0 => 'v4.6.1',
       ),
     ),
   ),

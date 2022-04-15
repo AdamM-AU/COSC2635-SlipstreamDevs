@@ -64,10 +64,12 @@ if ($username === NULL || $password === NULL) {
 				// We have a match made in heaven <3 <3
 			
 				// Fetch the users access level!
-				$query = $pdo->prepare('SELECT AdminAccess FROM Users WHERE UserID=?');
+				$query = $pdo->prepare('SELECT AdminAccess, FirstName, LastName FROM Users WHERE UserID=?');
 				$query->execute([ $UserID ]);
 				$result = $query->fetch();
 				$AccessLevel = $result['AdminAccess'];
+				$FirstName = $result['FirstName'];
+				$LastName = $result['LastName'];
 				
 				// CREATE SESSION!
 				if (session_status() === PHP_SESSION_NONE) {
@@ -78,6 +80,8 @@ if ($username === NULL || $password === NULL) {
 				$_SESSION['Username'] = $username;
 				$_SESSION['UserID'] = $UserID; // This will be used over and over when running other database transactions 
 				$_SESSION['AdminAccess'] = $AccessLevel; // This will be checked over and over while running database transactions, in case access level changes, mostly to display access level to the user on the dashboard
+				$_SESSION['FirstName'] = $FirstName;
+				$_SESSION['LastName'] = $LastName;
 				
 				// Send positive response to AJax form to redirect the user
 				$response = array("status" => 1, "message" => "");
