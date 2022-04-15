@@ -56,7 +56,7 @@ if (isset($_GET["logout"])) { //Set but Empty
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -116,24 +116,11 @@ if (isset($_GET["logout"])) { //Set but Empty
                     </div>
                 </div>
             </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
+			
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link" href="?module=adminControl">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Settings</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Settings:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
+                    <span>Admin Settings</span></a>
             </li>
 
             <!-- Divider -->
@@ -378,15 +365,15 @@ if (isset($_GET["logout"])) { //Set but Empty
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="?module=userTasks&task=profile">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="?module=userTasks&task=settings">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="?module=userTasks&task=actlog">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
@@ -423,7 +410,15 @@ if(isset($_GET['module'])) {
 		break;
 	
 	default:
-		echo "<h2>Requested Module Not Found!</h2>";
+		// Adam - Just another hidden Gem :D
+		echo <<<EOL
+			<div class="text-center">
+                <div class="mx-auto"><img src="img/404.png" alt="404"></div>
+                <p class="lead text-gray-800 mb-3"><br />404 - Page Not Found!</p>
+                <p class="text-gray-500 mb-0">I FIND YOUR LACK OF NAVIGATION DISTURBING.</p>
+                <a href="dashboard.php">← Back to Dashboard</a>
+            </div>";
+EOL;
 	}
 } else {
 	// Dashboard
