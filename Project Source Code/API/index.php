@@ -73,6 +73,62 @@ switch ($ReqTask) {
 	// ----- GROUP CONTROL ----- //
 	
 	// Group Management - Create Group
+	case "GroupList":
+		// Hit the database for the user list
+		$query = $pdo->prepare('SELECT GroupID, GroupName, GroupDescription, Location, Manager, Supervisor from UserGroups');
+		$query->execute([ ]);
+		$result = $query->fetchAll();
+		
+		// Create holding array
+		$processed = array();
+	
+		foreach ($result as $row) {
+			// Manager UserID to Name
+			if ($row['Manager'] !== null) {
+				// Run Query to get actual manager name
+				$query = $pdo->prepare('SELECT FirstName, LastName from Users WHERE UserID=?');
+				$query->execute([ $row['Manager'] ]);
+				$result = $query->fetch();
+				$manager = $result['LastName'] . ", " . $result['FirstName'];
+			} else {
+				$adminAccess = "Not Assigned";
+			}
+			
+			// Supervisor UserID to Name
+			if ($row['Supervisor'] !== null) {
+				$query = $pdo->prepare('SELECT FirstName, LastName from Users WHERE UserID=?');
+				$query->execute([ $row['Supervisor'] ]);
+				$result = $query->fetch();
+				$supervisor = $result['LastName'] . ", " . $result['FirstName'];
+			} else {
+				$Supervisor = "Not Assigned";
+			}
+			
+			// LocationID to Name
+			if ($row['Location'] !== null) {
+				$query = $pdo->prepare('SELECT Name from Locations WHERE LocationID=?');
+				$query->execute([ $row['Location'] ]);
+				$result = $query->fetch();
+				$location = $result['Name'];
+			} else {
+				$Supervisor = "Not Assigned";
+			}
+			
+			// How many users belong to group
+			$query = $pdo->prepare('SELECT COUNT(UserID) AS Count from UserGroupMapping WHERE GroupID=?');
+			$query->execute([ $row['GroupID'] ]);
+			$result = $query->fetch();
+			$userCount = $result['Count'];
+			
+			// Build Array Entry
+			$arrayEntry = array($row['GroupName'], $row['GroupDescription'], $location, $manager, $supervisor, $userCount);
+			
+			$processed[] = $arrayEntry; // Add date to processed array
+		}
+		$preparedArray = array("data" => $processed);
+		print json_encode($preparedArray, JSON_PRETTY_PRINT);
+		die();
+
 	case "GroupCreate":
 		echo "Group Management - Create Group";
 		die();
