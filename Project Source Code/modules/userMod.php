@@ -59,7 +59,7 @@ if (isset($_GET["task"])) {
 					<script type="text/javascript">
 					$(document).ready(function() {
 						$('#dataTable-userlist').DataTable( {
-							"ajax": 'https://dev.techydata.com.au/slipstream/API/?task=UserList'
+							"ajax": '<?PHP echo $baseURL; ?>/API/?task=UserList'
 						} );
 					} );
 					</script>
