@@ -4,6 +4,8 @@
  *			Accessable via https://slipstreamdevs.tech/API/?task=[TASKNAME]
  *
  * Last Modified: 2022/03/29 - By Adam Mutimer (s3875753)
+ *
+ * Notes: need to add protection to the API to ensure user is permitted and logged in.
  */
 require_once('config.php');
 require_once('include/db.inc.php');
@@ -18,21 +20,25 @@ switch ($ReqTask) {
 	// ----- USER CONTROL ----- //
 	// User Management - Add User
 	case "UserAdd":
+		// INSERT INTO Users (Username, Password, Email, Position, FirstName, LastName, LicenseNumber, LicenseState, LicenseType, StartDate) VALUES (?,?,?,?,?,?,?,?,?,?);
 		echo "User Management - Add User";
 		die(); // Kill the script do not process any further as we are done here
 	 
 	// User Management - Delete User
 	case "UserDel":
+		// UPDATE Users SET Active=?, FinishDate=? WHERE UserID=?
 		echo "User Management - Delete User";
 		die();
 	 
 	// User Management - Modify User
-	case "UserAdd":
+	case "UserModify":
+		// UPDATE Users SET Email=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=?, StartDate=? WHERE UserID=?
 		echo "// User Management - Modify User";
 		die();
 	 
 	// User Management - User Password Change
 	case "UserPass":
+		// UPDATE Users SET Password=? WHERE UserID=?
 		echo "User Management - User Password Change";
 		die();
 
@@ -130,21 +136,30 @@ switch ($ReqTask) {
 		die();
 
 	case "GroupCreate":
+		// INSERT INTO UserGroups (GroupName, GroupDescription, Location, Manager, Supervisor) VALUES (?,?,?,?,?);
 		echo "Group Management - Create Group";
 		die();
 		
 	// Group Management - Delete Group
 	case "GroupDel":
+		// DELETE FROM UserGroups WHERE GroupID=?
 		echo "Group Management - Delete Group";
 		die();
-
+	
+	case "GroupModify":
+		// UPDATE UserGroups SET GroupDescription=?, Location=?, Manager=?, Supervisor=? WHERE GroupID=?
+		echo "Group Management - Modify Group";
+		die();
+	
 	// Group Management - Group Add Member
 	case "GroupMemberAdd":
+		// INSERT INTO UserGroupMapping (UserID, GroupID) VALUES (?,?);
 		echo "Group Management - Add Group Memever";
 		die();
 
 	// Group Management - Group Delete Member
 	case "GroupMemberDel":
+		// DELETE FROM UserGroupMapping WHERE UserID=? AND GroupID=?
 		echo "Group Management - Delete Group Member";
 		die();
 		
