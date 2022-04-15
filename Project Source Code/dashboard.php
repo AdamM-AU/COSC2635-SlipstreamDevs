@@ -36,6 +36,8 @@ if (isset($_GET["logout"])) { //Set but Empty
     <meta name="author" content="">
 
     <title>Heavy Vehicle Management :: Dashboard</title>
+	<!-- jQuery JS -->
+    <script src="vendor/components/jquery/jquery.min.js"></script>
 	
     <!-- Custom fonts for this template-->
 	<link rel="stylesheet" href="vendor/components/font-awesome/css/all.css">
@@ -474,8 +476,6 @@ EOL;
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    
-    <script src="vendor/components/jquery/jquery.min.js"></script>
 	<script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->

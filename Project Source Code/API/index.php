@@ -5,6 +5,8 @@
  *
  * Last Modified: 2022/03/29 - By Adam Mutimer (s3875753)
  */
+require_once('config.php');
+require_once('include/db.inc.php');
 
 if(isset($_GET['task']) && !empty($_GET['task'])) {
     $ReqTask = $_GET['task'];
@@ -36,7 +38,36 @@ switch ($ReqTask) {
 
 	// User Management - List Users
 	case "UserList":
-		echo "User Management - List Users";
+		// Hit the database for the user list
+		$query = $pdo->prepare('SELECT Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate from Users');
+		$query->execute([ ]);
+		$result = $query->fetchAll();
+		
+		// Create holding array
+		$processed = array();
+	
+		foreach ($result as $row) {
+			// Override AdminAccess value
+			if ($row['AdminAccess'] == 1) {
+				$adminAccess = "Yes";
+			} else {
+				$adminAccess = "No";
+			}
+			
+			// Override finish date - null
+			if ($row['FinishedDate'] == null) {
+				$finishedDate = "N/A";
+			} else {
+				$finishedDate = $row['FinishedDate'];
+			}
+			
+			// Build Array Entry
+			$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $row['LicenseType'], $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate);
+			
+			$processed[] = $arrayEntry; // Add date to processed array
+		}
+		$preparedArray = array("data" => $processed);
+		print json_encode($preparedArray, JSON_PRETTY_PRINT);
 		die();
 	
 	// ----- GROUP CONTROL ----- //
