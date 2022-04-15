@@ -68,7 +68,7 @@ if (isset($_GET["logout"])) { //Set but Empty
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="dashboard.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -91,10 +91,10 @@ if (isset($_GET["logout"])) { //Set but Empty
                 <div id="userControls" class="collapse" aria-labelledby="userControls" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         
-                        <a class="collapse-item" href="buttons.html">List Users</a>
-                        <a class="collapse-item" href="cards.html">Add User</a>
-						<a class="collapse-item" href="cards.html">Delete Users</a>
-						<a class="collapse-item" href="cards.html">Modify Users</a>
+                        <a class="collapse-item" href="?module=userMod&task=list">List Users</a>
+                        <a class="collapse-item" href="?module=userMod&task=create">Add User</a>
+						<a class="collapse-item" href="?module=userMod&task=delete">Delete Users</a>
+						<a class="collapse-item" href="?module=userMod&task=modify">Modify Users</a>
                     </div>
                 </div>
             </li>
@@ -109,10 +109,10 @@ if (isset($_GET["logout"])) { //Set but Empty
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         
-                        <a class="collapse-item" href="buttons.html">List Groups</a>
-                        <a class="collapse-item" href="cards.html">Add Group</a>
-						<a class="collapse-item" href="cards.html">Delete Group</a>
-						<a class="collapse-item" href="cards.html">Modify Group</a>
+                        <a class="collapse-item" href="?module=groupMod&task=list">List Groups</a>
+                        <a class="collapse-item" href="?module=groupMod&task=create">Add Group</a>
+						<a class="collapse-item" href="?module=groupMod&task=delete">Delete Group</a>
+						<a class="collapse-item" href="?module=groupMod&task=modify">Modify Group</a>
                     </div>
                 </div>
             </li>
