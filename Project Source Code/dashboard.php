@@ -9,26 +9,27 @@ require_once('API/config.php');
 
 // CREATE SESSION!
 if (session_status() === PHP_SESSION_NONE) {
-	session_start();
+    session_start();
 }
 
 /* Check if user has logged in via API by checking for session variable
  *	- Check if username session variable is set?
  *	- if not set destroy the session and redirect to login form
  */
-if (!isset($_SESSION['Username'])) {	
-	session_destroy();
+if (!isset($_SESSION['Username'])) {
+    session_destroy();
     header('Location: index.html');
 }
 
 // Destroy Session and associated variables if we are logging out, and redirect
 if (isset($_GET["logout"])) { //Set but Empty
-	session_destroy();
+    session_destroy();
     header('Location: index.html');
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,18 +38,18 @@ if (isset($_GET["logout"])) { //Set but Empty
     <meta name="author" content="">
 
     <title>Heavy Vehicle Management :: Dashboard</title>
-	<!-- jQuery JS -->
+    <!-- jQuery JS -->
     <script src="vendor/components/jquery/jquery.min.js"></script>
-	
-	<!-- Our Custom JS -->
-	<script src="js/slipstream.js"></script>
-	
+
+    <!-- Our Custom JS -->
+    <script src="js/slipstream.js"></script>
+
     <!-- Custom fonts for this template-->
-	<link rel="stylesheet" href="vendor/components/font-awesome/css/all.css">
+    <link rel="stylesheet" href="vendor/components/font-awesome/css/all.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-	<link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
@@ -87,60 +88,105 @@ if (isset($_GET["logout"])) { //Set but Empty
                 Interface
             </div>
 
-            <!-- ADMIN Nav Item - User Controls -->
+
+
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#userControls"
-                    aria-expanded="true" aria-controls="userControls">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>User Controls</span>
-                </a>
-                <div id="userControls" class="collapse" aria-labelledby="userControls" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        
-                        <a class="collapse-item" href="?module=userMod&task=list">List Users</a>
-                        <a class="collapse-item" href="?module=userMod&task=create">Add User</a>
-						<a class="collapse-item" href="?module=userMod&task=delete">Delete Users</a>
-						<a class="collapse-item" href="?module=userMod&task=modify">Modify Users</a>
-                    </div>
-                </div>
+                <a class="nav-link" href="?module=assigned">
+                    <i class="fas fa-fw fa-pencil"></i>
+                    <span>Assigned</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=driver&task=list">
+                    <i class="fas fa-fw fa-user-circle"></i>
+                    <span>Driver</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=vehicleMod&task=list">
+                    <i class="fas fa-fw fa-car"></i>
+                    <span>Vehicle</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=trip">
+                    <i class="fas fa-fw fa-road"></i>
+                    <span>Trip</span></a>
             </li>
 
-			<!-- ADMIN Nav Item - Group Controls -->
-			<li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Group Controls</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        
-                        <a class="collapse-item" href="?module=groupMod&task=list">List Groups</a>
-                        <a class="collapse-item" href="?module=groupMod&task=create">Add Group</a>
-						<a class="collapse-item" href="?module=groupMod&task=delete">Delete Group</a>
-						<a class="collapse-item" href="?module=groupMod&task=modify">Modify Group</a>
-                    </div>
-                </div>
-            </li>
-			
             <li class="nav-item">
                 <a class="nav-link" href="?module=adminControl">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fas fa-fw fa-tasks"></i>
                     <span>Admin Settings</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=customer&task=list">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Customer</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=maintenance">
+                    <i class="fas fa-fw fa-cogs"></i>
+                    <span>Maintenance</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=refuel">
+                    <i class="fas fa-fw fa-gas-pump"></i>
+                    <span>Refueling</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=finance">
+                    <i class="fas fa-fw fa-usd"></i>
+                    <span>Finance</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?module=report">
+                    <i class="fas fa-fw fa-pie-chart"></i>
+                    <span>Report</span></a>
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                Setting
             </div>
+            <!-- ADMIN Nav Item - User Controls -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#userControls" aria-expanded="true" aria-controls="userControls">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User Controls</span>
+                </a>
+                <div id="userControls" class="collapse" aria-labelledby="userControls" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
 
+                        <a class="collapse-item" href="?module=userMod&task=list">List Users</a>
+                        <a class="collapse-item" href="?module=userMod&task=create">Add User</a>
+                        <a class="collapse-item" href="?module=userMod&task=delete">Delete Users</a>
+                        <a class="collapse-item" href="?module=userMod&task=modify">Modify Users</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- ADMIN Nav Item - Group Controls -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Group Controls</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <a class="collapse-item" href="?module=groupMod&task=list">List Groups</a>
+                        <a class="collapse-item" href="?module=groupMod&task=create">Add Group</a>
+                        <a class="collapse-item" href="?module=groupMod&task=delete">Delete Group</a>
+                        <a class="collapse-item" href="?module=groupMod&task=modify">Modify Group</a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
@@ -171,7 +217,11 @@ if (isset($_GET["logout"])) { //Set but Empty
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="?module=adminControl">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Setting</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -206,18 +256,14 @@ if (isset($_GET["logout"])) { //Set but Empty
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -230,15 +276,13 @@ if (isset($_GET["logout"])) { //Set but Empty
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
@@ -281,22 +325,19 @@ if (isset($_GET["logout"])) { //Set but Empty
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -307,8 +348,7 @@ if (isset($_GET["logout"])) { //Set but Empty
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -319,8 +359,7 @@ if (isset($_GET["logout"])) { //Set but Empty
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -331,8 +370,7 @@ if (isset($_GET["logout"])) { //Set but Empty
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -349,19 +387,16 @@ if (isset($_GET["logout"])) { //Set but Empty
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-								<?PHP 
-									// Fetch Session variable for users firstname and lastname and echo them out
-									echo $_SESSION['FirstName'] . " " . $_SESSION['LastName']; 
-								?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    <?PHP
+                                    // Fetch Session variable for users firstname and lastname and echo them out
+                                    echo $_SESSION['FirstName'] . " " . $_SESSION['LastName'];
+                                    ?></span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="?module=userTasks&task=profile">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
@@ -389,26 +424,26 @@ if (isset($_GET["logout"])) { //Set but Empty
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-<?PHP 
- // Start Module Contents
- /* VALID User and Session */
-if(isset($_GET['module'])) {
-	$requestedModule = $_GET['module'];
-	
-	switch($requestedModule) {
-	// User Management Module
-	case 'userMod':
-		require('modules/userMod.php');
-		break;
-	
-	// Group Management Module
-	case 'groupMod':
-		require('modules/groupMod.php');
-		break;
-	
-	default:
-		// Adam - Just another hidden Gem :D
-		echo <<<EOL
+                    <?PHP
+                    // Start Module Contents
+                    /* VALID User and Session */
+                    if (isset($_GET['module'])) {
+                        $requestedModule = $_GET['module'];
+
+                        switch ($requestedModule) {
+                                // User Management Module
+                            case 'userMod':
+                                require('modules/userMod.php');
+                                break;
+
+                                // Group Management Module
+                            case 'groupMod':
+                                require('modules/groupMod.php');
+                                break;
+
+                            default:
+                                // Adam - Just another hidden Gem :D
+                                echo <<<EOL
 			<div class="text-center">
                 <div class="mx-auto"><img src="img/404.png" alt="404"></div>
                 <p class="lead text-gray-800 mb-3"><br />404 - Page Not Found!</p>
@@ -416,14 +451,14 @@ if(isset($_GET['module'])) {
                 <a href="dashboard.php">← Back to Dashboard</a>
             </div>";
 EOL;
-	}
-} else {
-	// Dashboard
-	require('modules/dashboard-home.php');
-}
- // END - Module Contents
- ?>
-                </div>					
+                        }
+                    } else {
+                        // Dashboard
+                        require('modules/dashboard-home.php');
+                    }
+                    // END - Module Contents
+                    ?>
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -451,8 +486,7 @@ EOL;
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -471,7 +505,7 @@ EOL;
     </div>
 
     <!-- Bootstrap core JavaScript-->
-	<script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
