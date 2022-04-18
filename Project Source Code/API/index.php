@@ -44,36 +44,65 @@ switch ($ReqTask) {
 
 	// User Management - List Users
 	case "UserList":
-		// Hit the database for the user list
-		$query = $pdo->prepare('SELECT Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate from Users');
-		$query->execute([ ]);
-		$result = $query->fetchAll();
+		if(isset($_GET['opt']) && !empty($_GET['opt'])) {
+			$option = $_GET['opt'];
+			
+			switch ($option) {
+				case "selection":
+					$query = $pdo->prepare('SELECT UserID, Username, FirstName, LastName from Users');
+					$query->execute([ ]);
+					$result = $query->fetchAll();
+					
+					// Create holding array
+					$processed = array();					
+
+					foreach ($result as $row) {			
+						// Build Array Entry
+						$text = $row['Username'] . ' (' . $row['LastName'] . ', ' . $row['FirstName'] . ')';
+						$arrayEntry = array("id" => $row['UserID'], "text" => $text);
+						$processed[] = $arrayEntry; // Add date to processed array
+					}
+					print json_encode($processed, JSON_PRETTY_PRINT);
+				default:
+					die();	
+			}
+			
+		} else {
+			// Hit the database for the user list
+			$query = $pdo->prepare('SELECT UserID, Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate from Users');
+			$query->execute([ ]);
+			$result = $query->fetchAll();
+			
+			// Create holding array
+			$processed = array();
 		
-		// Create holding array
-		$processed = array();
-	
-		foreach ($result as $row) {
-			// Override AdminAccess value
-			if ($row['AdminAccess'] == 1) {
-				$adminAccess = "Yes";
-			} else {
-				$adminAccess = "No";
+			foreach ($result as $row) {
+				// Override AdminAccess value
+				if ($row['AdminAccess'] == 1) {
+					$adminAccess = "Yes";
+				} else {
+					$adminAccess = "No";
+				}
+				
+				// Override finish date - null
+				if ($row['FinishedDate'] == null) {
+					$finishedDate = "N/A";
+				} else {
+					$finishedDate = $row['FinishedDate'];
+				}
+				
+				// Call a modal and pass the GroupID to the modal code, so it can pass it to the API :)
+				$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Delete User\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
+				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
+				
+				// Build Array Entry
+				$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $row['LicenseType'], $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate, $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
+				
+				$processed[] = $arrayEntry; // Add date to processed array
 			}
-			
-			// Override finish date - null
-			if ($row['FinishedDate'] == null) {
-				$finishedDate = "N/A";
-			} else {
-				$finishedDate = $row['FinishedDate'];
-			}
-			
-			// Build Array Entry
-			$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $row['LicenseType'], $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate);
-			
-			$processed[] = $arrayEntry; // Add date to processed array
+			$preparedArray = array("data" => $processed);
+			print json_encode($preparedArray, JSON_PRETTY_PRINT);
 		}
-		$preparedArray = array("data" => $processed);
-		print json_encode($preparedArray, JSON_PRETTY_PRINT);
 		die();
 	
 	// ----- GROUP CONTROL ----- //
@@ -126,8 +155,14 @@ switch ($ReqTask) {
 			$result = $query->fetch();
 			$userCount = $result['Count'];
 			
+			// Call a modal and pass the GroupID to the modal code, so it can pass it to the API :)
+			$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteGroup\" data-id=\"" . $row['GroupID'] . "\" data-name=\"" . $row['GroupName'] . "\" alt=\"Delete Group\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
+			$editButton = "<a href=\"$baseURL/dashboard.php?module=groupMod&task=modify&target=$row[GroupID]\" alt=\"Edit Group\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
+			$membersButton = "<i class=\"text-success fa-solid fa-users\"></i>";
+			
+			
 			// Build Array Entry
-			$arrayEntry = array($row['GroupName'], $row['GroupDescription'], $location, $manager, $supervisor, $userCount);
+			$arrayEntry = array($row['GroupName'], $row['GroupDescription'], $location, $manager, $supervisor, $userCount, $membersButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
 			
 			$processed[] = $arrayEntry; // Add date to processed array
 		}

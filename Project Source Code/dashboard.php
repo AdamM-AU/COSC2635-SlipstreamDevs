@@ -99,8 +99,6 @@ if (isset($_GET["logout"])) { //Set but Empty
                         
                         <a class="collapse-item" href="?module=userMod&task=list">List Users</a>
                         <a class="collapse-item" href="?module=userMod&task=create">Add User</a>
-						<a class="collapse-item" href="?module=userMod&task=delete">Delete Users</a>
-						<a class="collapse-item" href="?module=userMod&task=modify">Modify Users</a>
                     </div>
                 </div>
             </li>
@@ -117,8 +115,6 @@ if (isset($_GET["logout"])) { //Set but Empty
                         
                         <a class="collapse-item" href="?module=groupMod&task=list">List Groups</a>
                         <a class="collapse-item" href="?module=groupMod&task=create">Add Group</a>
-						<a class="collapse-item" href="?module=groupMod&task=delete">Delete Group</a>
-						<a class="collapse-item" href="?module=groupMod&task=modify">Modify Group</a>
                     </div>
                 </div>
             </li>
