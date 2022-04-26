@@ -55,8 +55,46 @@ if (isset($_GET["task"])) {
 		// Show user list content
 		case "create":		
 ?>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					// When page is finished loading in browser override default form action
+					$("#createUserForm").submit(function(event){
+						// cancels the form submission
+						event.preventDefault();
+						// instead of default action run javascript function below
+						submitForm("createUserForm"); // Our custom action/function
+					});
+					
+					// The custom form submission function
+					function submitForm(form){
+						if (form == "createUserForm") {
+							var formData = $("#createUserForm").serializeJSON(); // Encode entire form as JSON object
+							$.ajax({
+								url:'<?PHP echo $baseURL; ?>/API/?task=UserAdd',
+								type:'POST',
+								data: formData,
+								success:function(response){
+									var msg = "";
+									var responseData = jQuery.parseJSON(response);
+									console.log(response); // Debugging purposes
+									if (responseData.status == 1) {
+										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
+									} else {
+										// Error Message
+										$("#message").addClass("text-danger");
+										msg = responseData.message;
+									}
+									$("#message").html(msg);
+								}
+							});
+						}
+					}
+				});
+						
+			</script>
+			
 			<div class="col-6">
-				<form>
+				<form id="createUserForm">
 					<div class="form-group row">
 						<label for="email" class="col-4 col-form-label">Email</label> 
 						<div class="col-8">
@@ -66,7 +104,7 @@ if (isset($_GET["task"])) {
 										<i class="fa fa-at"></i>
 									</div>
 								</div> 
-								<input id="email" name="email" placeholder="j.connor@slipstreamdevs.tech" type="text" required="required" class="form-control">
+								<input id="Email" name="Email" placeholder="j.connor@slipstreamdevs.tech" type="text" required="required" class="form-control">
 							</div>
 						</div>
 					</div>
@@ -105,7 +143,7 @@ if (isset($_GET["task"])) {
 										<i class="fa fa-key"></i>
 									</div>
 								</div> 
-								<input id="text" name="text" placeholder="Confirm Password" type="text" class="form-control" required="required">
+								<input id="PasswordConf" name="PasswordConf" placeholder="Confirm Password" type="text" class="form-control" required="required">
 							</div>
 						</div>
 					</div>
@@ -125,7 +163,7 @@ if (isset($_GET["task"])) {
 					<div class="form-group row">
 						<label for="position" class="col-4 col-form-label">Job Position</label> 
 						<div class="col-8">
-							<input id="position" name="position" placeholder="Job Role" type="text" class="form-control">
+							<input id="Position" name="Position" placeholder="Job Role" type="text" class="form-control">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -157,7 +195,7 @@ if (isset($_GET["task"])) {
 					<div class="form-group row">
 						<label for="LicType" class="col-4 col-form-label">License Type</label> 
 						<div class="col-8">
-							<select id="LicType" name="LicType" class="custom-select" multiple="multiple">
+							<select id="LicType[]" name="LicType[]" class="custom-select" multiple="multiple">
 								<option value="C">Car</option>
 								<option value="R">Rider</option>
 								<option value="RE">Restricted Rider</option>
@@ -175,6 +213,7 @@ if (isset($_GET["task"])) {
 							<button name="reset" type="reset" class="btn btn-danger">Reset</button>
 						</div>
 					</div>
+					<div class="form-group row" id="message"></div>
 				</form>
 			</div>
 <?PHP
@@ -188,6 +227,8 @@ if (isset($_GET["task"])) {
 					<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 					
 					<script type="text/javascript">
+					var userID; // Kinda like a global
+					
 					$(document).ready(function() {
 						$('#dataTable-userlist').DataTable( {
 							"columnDefs": [
@@ -200,10 +241,33 @@ if (isset($_GET["task"])) {
 						$('#deleteUser').on('show.bs.modal', function (event) {
 						  var button = $(event.relatedTarget) // Button that triggered the modal
 						  var userName = button.data('name') // Extract info from data-* attributes
-						  var userID = button.data('id') // Extract info from data-* attributes
+						  userID = button.data('id') // Extract info from data-* attributes
 
 						  $("#deleteUserNameDrop").html(userName);
 						})
+						
+						// Delete the user
+						$("#deleteConfirmed").click(function (){
+							console.log(userID);
+							$.ajax({
+								url:'<?PHP echo $baseURL; ?>/API/?task=UserDel',
+								type:'POST',
+								data: 'target=' + userID,
+								success:function(response){
+									var msg = "";
+									var responseData = jQuery.parseJSON(response);
+									console.log(response); // Debugging purposes
+									if (responseData.status == 1) {
+										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
+									} else {
+										// Error Message
+										$("#message").addClass("text-danger");
+										msg = responseData.message;
+									}
+									$("#message").html(msg);
+								}
+							});
+						});						
 					} );
 					</script>
 			        
@@ -270,7 +334,7 @@ if (isset($_GET["task"])) {
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-danger">Delete</button>
+							<button id="deleteConfirmed" type="button" class="btn btn-danger">Delete</button>
 						  </div>
 						</div>
 					  </div>

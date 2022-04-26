@@ -37,8 +37,10 @@ if (isset($_GET["logout"])) { //Set but Empty
     <meta name="author" content="">
 
     <title>Heavy Vehicle Management :: Dashboard</title>
+	
 	<!-- jQuery JS -->
     <script src="vendor/components/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery.serializejson.min.js"></script>
 	
 	<!-- Our Custom JS -->
 	<script src="js/slipstream.js"></script>

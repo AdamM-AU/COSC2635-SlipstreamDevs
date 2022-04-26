@@ -79,11 +79,43 @@ if (isset($_GET["task"])) {
 						})
 					});
 					
+					// When page is finished loading in browser override default form action
+					$("#createGroupForm").submit(function(event){
+						// cancels the form submission
+						event.preventDefault();
+						// instead of default action run javascript function below
+						submitForm("createGroupForm"); // Our custom action/function
+					});
+					
+					// The custom form submission function
+					function submitForm(form){
+						if (form == "createGroupForm") {
+							var formData = $("#createGroupForm").serializeJSON(); // Encode entire form as JSON object
+							$.ajax({
+								url:'<?PHP echo $baseURL; ?>/API/?task=GroupCreate',
+								type:'POST',
+								data: formData,
+								success:function(response){
+									var msg = "";
+									var responseData = jQuery.parseJSON(response);
+									console.log(response); // Debugging purposes
+									if (responseData.status == 1) {
+										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
+									} else {
+										// Error Message
+										$("#message").addClass("text-danger");
+										msg = responseData.message;
+									}
+									$("#message").html(msg);
+								}
+							});
+						}
+					}
 				});
 						
 			</script>
 			<div class="col-4">
-				<form>
+				<form id="createGroupForm">
 					<div class="form-group row">
 						<label for="Name" class="col-4 col-form-label">Group Name</label> 
 						<div class="col-8">
@@ -133,6 +165,7 @@ if (isset($_GET["task"])) {
 							<button name="reset" type="reset" class="btn btn-danger">Reset</button>
 						</div>
 					</div>
+					<div class="form-group row" id="message"></div>
 				</form>
 			</div>
 
@@ -147,24 +180,49 @@ if (isset($_GET["task"])) {
 					<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 					
 					<script type="text/javascript">
-					$(document).ready(function() {
-						// Populate Datatable
-						$('#dataTable-grouplist').DataTable( {
-							"columnDefs": [
-								{ className: "text-center", "targets": [ 5, 6 ] }
-							],
-							"ajax": '<?PHP echo $baseURL; ?>/API/?task=GroupList'
-						} );
+						var groupID; // Kinda like a global
 						
-						// Delete Confirmation - Varying Modal Content
-						$('#deleteGroup').on('show.bs.modal', function (event) {
-						  var button = $(event.relatedTarget) // Button that triggered the modal
-						  var groupName = button.data('name') // Extract info from data-* attributes
-						  var groupID = button.data('id') // Extract info from data-* attributes
+						$(document).ready(function() {
+							// Populate Datatable
+							$('#dataTable-grouplist').DataTable( {
+								"columnDefs": [
+									{ className: "text-center", "targets": [ 5, 6 ] }
+								],
+								"ajax": '<?PHP echo $baseURL; ?>/API/?task=GroupList'
+							} );
+							
+							// Delete Confirmation - Varying Modal Content
+							$('#deleteGroup').on('show.bs.modal', function (event) {
+							  var button = $(event.relatedTarget) // Button that triggered the modal
+							  var groupName = button.data('name') // Extract info from data-* attributes
+							  groupID = button.data('id') // Extract info from data-* attributes
 
-						  $("#deleteGroupNameDrop").html(groupName);
-						})
-					} );
+							  $("#deleteGroupNameDrop").html(groupName);
+							})
+							
+							// Delete the group
+							$("#deleteConfirmed").click(function (){
+								console.log(groupID);
+								$.ajax({
+									url:'<?PHP echo $baseURL; ?>/API/?task=GroupDel',
+									type:'POST',
+									data: 'target=' + groupID,
+									success:function(response){
+										var msg = "";
+										var responseData = jQuery.parseJSON(response);
+										console.log(response); // Debugging purposes
+										if (responseData.status == 1) {
+											window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
+										} else {
+											// Error Message
+											$("#message").addClass("text-danger");
+											msg = responseData.message;
+										}
+										$("#message").html(msg);
+									}
+								});
+							});						
+						} );
 					</script>
 			        
 					<!-- DataTales - Populated via AJAX API call -->
@@ -221,7 +279,7 @@ if (isset($_GET["task"])) {
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-danger">Delete</button>
+							<button id="deleteConfirmed" type="button" class="btn btn-danger">Delete</button>
 						  </div>
 						</div>
 					  </div>
