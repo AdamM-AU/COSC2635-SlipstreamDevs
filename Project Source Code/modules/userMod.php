@@ -314,6 +314,7 @@ if (isset($_GET["task"])) {
 								<span class="font-weight-bold">Legend:</span><br />
 								<i class="text-warning fa-solid fa-pen"></i> - Edit User<br />
 								<i class="text-danger fa-solid fa-x"></i> - Delete User<br />
+								<i class="text-success fa-solid fa-check"></i> - Undelete User<br />
 								</sub>
 							</div>
                         </div>			
