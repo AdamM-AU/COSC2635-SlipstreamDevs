@@ -268,6 +268,38 @@ if (isset($_GET["task"])) {
 								}
 							});
 						});						
+						
+						// UnDelete User - UserUnDel
+						$('#unDeleteUser').on('show.bs.modal', function (event) {
+						  var button = $(event.relatedTarget) // Button that triggered the modal
+						  var userName = button.data('name') // Extract info from data-* attributes
+						  userID = button.data('id') // Extract info from data-* attributes
+
+						  $("#unDeleteUserNameDrop").html(userName);
+						})
+						
+						// Delete the user
+						$("#unDeleteConfirmed").click(function (){
+							console.log(userID);
+							$.ajax({
+								url:'<?PHP echo $baseURL; ?>/API/?task=UserUnDel',
+								type:'POST',
+								data: 'target=' + userID,
+								success:function(response){
+									var msg = "";
+									var responseData = jQuery.parseJSON(response);
+									console.log(response); // Debugging purposes
+									if (responseData.status == 1) {
+										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
+									} else {
+										// Error Message
+										$("#message").addClass("text-danger");
+										msg = responseData.message;
+									}
+									$("#message").html(msg);
+								}
+							});
+						});	
 					} );
 					</script>
 			        
@@ -336,6 +368,27 @@ if (isset($_GET["task"])) {
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
 							<button id="deleteConfirmed" type="button" class="btn btn-danger">Delete</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					
+					<!-- Modal - Undeletion Confirmation -->
+					<div class="modal fade" id="unDeleteUser" tabindex="-1" role="dialog" aria-labelledby="unDeleteUserTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title text-danger" id="unDeleteUserCenterTitle">Confirmation Required!</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  <div class="modal-body">
+							Are you sure you wish to restore the user "<span id="unDeleteUserNameDrop"></span>" ?
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+							<button id="unDeleteConfirmed" type="button" class="btn btn-danger">Restore</button>
 						  </div>
 						</div>
 					  </div>

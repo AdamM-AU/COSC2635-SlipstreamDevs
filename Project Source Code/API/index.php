@@ -114,9 +114,25 @@ switch ($ReqTask) {
 			
 			$query = $pdo->prepare('UPDATE Users SET Active=?, FinishDate=? WHERE UserID=?');
 			$query->execute([ 0, $terminationDate, $userID ]);
-			$response = array("status" => 0, "message" => "");
+			$response = array("status" => 1, "message" => "");
 		} else {
 			$response = array("status" => 0, "message" => "ERROR: Unable to delete user!");
+		}
+		print json_encode($response, JSON_PRETTY_PRINT);	
+		die();
+
+	// User Management - Delete User
+	case "UserUnDel":
+		if(isset($_POST['target']) && !empty($_POST['target'])) {
+			$userID = $_POST['target'];
+			$startDate = date("Y-m-d");
+			$terminationDate = NULL;
+			
+			$query = $pdo->prepare('UPDATE Users SET Active=?, StartDate=?, FinishDate=? WHERE UserID=?');
+			$query->execute([ 1, $startDate, $terminationDate, $userID ]);
+			$response = array("status" => 1, "message" => "");
+		} else {
+			$response = array("status" => 0, "message" => "ERROR: Unable to restore user!");
 		}
 		print json_encode($response, JSON_PRETTY_PRINT);	
 		die();
@@ -193,7 +209,7 @@ switch ($ReqTask) {
 					$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Delete User\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
 				} else {
 					// Activate Button
-					$deleteButton = "<i class=\"text-success fa-solid fa-check\"></i>";
+					$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#unDeleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Undelete User\"><i class=\"text-success fa-solid fa-check\"></i></a>";
 				}
 				
 				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
