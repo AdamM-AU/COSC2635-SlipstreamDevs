@@ -114,7 +114,7 @@ switch ($ReqTask) {
 			
 			$query = $pdo->prepare('UPDATE Users SET Active=?, FinishDate=? WHERE UserID=?');
 			$query->execute([ 0, $terminationDate, $userID ]);
-			$response = array("status" => 1, "message" => "");
+			$response = array("status" => 0, "message" => "");
 		} else {
 			$response = array("status" => 0, "message" => "ERROR: Unable to delete user!");
 		}
@@ -161,8 +161,8 @@ switch ($ReqTask) {
 			
 		} else {
 			// Hit the database for the user list
-			$query = $pdo->prepare('SELECT UserID, Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate FROM Users WHERE Active=?');
-			$query->execute([ 1 ]);
+			$query = $pdo->prepare('SELECT UserID, Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate FROM Users');
+			$query->execute([ ]);
 			$result = $query->fetchAll();
 			
 			// Create holding array
@@ -177,10 +177,10 @@ switch ($ReqTask) {
 				}
 				
 				// Override finish date - null
-				if ($row['FinishedDate'] == null) {
+				if ($row['FinishDate'] == null) {
 					$finishedDate = "N/A";
 				} else {
-					$finishedDate = $row['FinishedDate'];
+					$finishedDate = $row['FinishDate'];
 				}
 				
 				// Process License Types
@@ -188,7 +188,14 @@ switch ($ReqTask) {
 				$LicenseType = implode(", ", $LicenseType);
 				
 				// Call a modal and pass the GroupID to the modal code, so it can pass it to the API :)
-				$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Delete User\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
+				if ($row['FinishDate'] == null) {
+					// Delete Button
+					$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Delete User\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
+				} else {
+					// Activate Button
+					$deleteButton = "<i class=\"text-success fa-solid fa-check\"></i>";
+				}
+				
 				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
 				
 				// Build Array Entry
