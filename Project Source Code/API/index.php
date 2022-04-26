@@ -134,13 +134,64 @@ switch ($ReqTask) {
 		} else {
 			$response = array("status" => 0, "message" => "ERROR: Unable to restore user!");
 		}
-		print json_encode($response, JSON_PRETTY_PRINT);	
+		print json_encode($response, JSON_PRETTY_PRINT);
 		die();
 	 
 	// User Management - Modify User
 	case "UserModify":
-		// UPDATE Users SET Email=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=?, StartDate=? WHERE UserID=?
-		echo "// User Management - Modify User";
+		if(isset($_GET['opt']) && !empty($_GET['opt'])) {
+			$opt = $_GET['opt'];
+			
+			switch ($opt) {
+				// Fetch Current UserData
+				case "fetch" :
+					if(isset($_GET['target']) && !empty($_GET['target'])) {
+						$target = $_GET['target'];
+						
+						$query = $pdo->prepare('SELECT Username, Email, Position, FirstName, LastName, LicenseNumber, LicenseState, LicenseType FROM Users WHERE UserID=?');
+						$query->execute([ $target ]);
+						$result = $query->fetch();
+						
+						// Does the user exist?
+						if ($result != NULL) {
+							$processed = array( "Username" => $result['Username'],
+												"Email" => $result['Email'],
+												"Position" => $result['Position'],
+												"FirstName" => $result['FisrtName'],
+												"LastName" => $result['LastName'],
+												"LicenseNumber" => $result['LicenseNumber'],
+												"LicenseState" => $result['LicenseState'],
+												"LicenseType" => json_decode($result['LicenseType']) // This is stored in the database as a json array, as SQLite cannot store array datatypes :)
+												);
+							$response = array("status" => 1, "message" => "", "data" => $processed);
+							print json_encode($response, JSON_PRETTY_PRINT);
+							die();
+						} else {
+							$response = array("status" => 0, "message" => "ERROR: User not found!");
+							print json_encode($response, JSON_PRETTY_PRINT);
+							die();
+						}
+					} else {
+						$response = array("status" => 0, "message" => "ERROR: User not found!");
+						print json_encode($response, JSON_PRETTY_PRINT);
+						die();
+					}
+					
+				// Update UserData
+				case "update" :
+					// UPDATE Users SET Email=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=?, StartDate=? WHERE UserID=?
+					$response = array("status" => 1, "message" => "");
+					print json_encode($response, JSON_PRETTY_PRINT);
+					die();
+				
+				default:
+					$response = array("status" => 0, "message" => "ERROR: Option not found!");
+					print json_encode($response, JSON_PRETTY_PRINT);
+			}
+		} else {
+			$response = array("status" => 0, "message" => "ERROR: Option not found!");
+			print json_encode($response, JSON_PRETTY_PRINT);
+		}
 		die();
 	 
 	// User Management - User Password Change
@@ -177,7 +228,7 @@ switch ($ReqTask) {
 			
 		} else {
 			// Hit the database for the user list
-			$query = $pdo->prepare('SELECT UserID, Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate FROM Users');
+			$query = $pdo->prepare('SELECT UserID, Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate, Active FROM Users');
 			$query->execute([ ]);
 			$result = $query->fetchAll();
 			
@@ -204,7 +255,7 @@ switch ($ReqTask) {
 				$LicenseType = implode(", ", $LicenseType);
 				
 				// Call a modal and pass the GroupID to the modal code, so it can pass it to the API :)
-				if ($row['FinishDate'] == null) {
+				if ($row['Active'] == 0) {
 					// Delete Button
 					$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Delete User\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
 				} else {
@@ -215,7 +266,13 @@ switch ($ReqTask) {
 				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
 				
 				// Build Array Entry
-				$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $LicenseType, $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate, $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
+				if ($row['Active'] == 1) {
+					// Active Accounts
+					$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $LicenseType, $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate, $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
+				} else {
+					// Inactive Accounts
+					$arrayEntry = array('<i><s>' . $row['Username'] . '</s></i>', '<i>' . $row['Position'] . '</i>', '<i>' . $row['Email'] . '</i>', '<i>' . $row['FirstName'] . '</i>', '<i>' . $row['LastName'] . '</i>', '<i>' . $row['LicenseNumber'] . '</i>', '<i>' . $LicenseType . '</i>', '<i>' . $row['LicenseState'] . '</i>', '<i>' . $adminAccess . '</i>', '<i>' . $row['StartDate'] . '</i>', '<i>' . $finishedDate . '</i>', $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
+				}
 				
 				$processed[] = $arrayEntry; // Add date to processed array
 			}
@@ -364,7 +421,7 @@ switch ($ReqTask) {
 	// Group Management - Group Delete Member
 	case "GroupMemberDel":
 		// DELETE FROM UserGroupMapping WHERE UserID=? AND GroupID=?
-		echo "Group Management - Delete Group Member";
+		echo "Group Management - Delete/Remove Group Member";
 		die();
 		
 	// ----- END OF DEFINED TASKS ----- //
