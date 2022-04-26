@@ -5,10 +5,16 @@
  *
  * Last Modified: 2022/03/29 - By Adam Mutimer (s3875753)
  *
- * Notes: need to add protection to the API to ensure user is permitted and logged in.
+ * Notes: 	- need to add protection to the API to ensure user is permitted and logged in.
+ * 			- need to add admin access checks
  */
 require_once('config.php');
 require_once('include/db.inc.php');
+
+function assignIfNotEmpty($var) {
+	// Sepecial function to assign "" to empty veriables
+    return (!empty($var)) ? $var : "";
+}
 
 if(isset($_GET['task']) && !empty($_GET['task'])) {
     $ReqTask = $_GET['task'];
@@ -20,14 +26,99 @@ switch ($ReqTask) {
 	// ----- USER CONTROL ----- //
 	// User Management - Add User
 	case "UserAdd":
-		// INSERT INTO Users (Username, Password, Email, Position, FirstName, LastName, LicenseNumber, LicenseState, LicenseType, StartDate) VALUES (?,?,?,?,?,?,?,?,?,?);
-		echo "User Management - Add User";
-		die(); // Kill the script do not process any further as we are done here
-	 
+		// Do we have a email address
+		if(isset($_POST['Email']) && !empty($_POST['Email'])) {
+			// Do we have a username
+			if(isset($_POST['Username']) && !empty($_POST['Username'])) {
+				// Do we have a password
+				if(isset($_POST['Password']) && !empty($_POST['Password'])) {
+					// Do we have a confirmation password
+					if(isset($_POST['PasswordConf']) && !empty($_POST['PasswordConf'])) {
+						// Do the passwords match?
+						if ($_POST['Password'] == $_POST['PasswordConf']) {
+							// Do we have a first name
+							if(isset($_POST['FName']) && !empty($_POST['FName'])) {
+								// Do we have a last name
+								if(isset($_POST['LName']) && !empty($_POST['LName'])) {
+									// We have all required fields
+									
+									// Check if username is taken!
+									$query = $pdo->prepare('SELECT Username from Users WHERE Username=? LIMIT 1');
+									$query->execute([ $_POST['Username'] ]);
+									$result = $query->fetchAll();
+									
+									if ($result == NULL) {
+										// Unique Username
+										// Required Variables
+										$Email = $_POST['Email']; // Email Address
+										$Username = $_POST['Username']; // Username
+										$Password = $_POST['Password']; // Plain text password
+										$FName = $_POST['FName']; // First Name
+										$LName = $_POST['LName']; // Last Name
+										
+										// Optional Variables
+										$Position = assignIfNotEmpty($_POST['Position']); // Job Role
+										$LicenseNumber = assignIfNotEmpty($_POST['LicNo']); // License Number
+										$LicenseState = assignIfNotEmpty($_POST['LicState']); // License Issuing State
+										$LicenseState = strtoupper($LicenseState); // Uppercase string
+										$LicenseType = assignIfNotEmpty($_POST['LicType']); // License Issuing State
+										
+										// Process License Type Array
+										$LicenseType = json_encode($LicenseType); // Convert to JSON array to store in SQLlite
+										
+										// Process Password
+										$Password = password_hash($Password, PASSWORD_DEFAULT); // Hashed Password
+										
+										// Set Start Date
+										$StartDate = date("Y-m-d");
+										
+										$query = $pdo->prepare('INSERT INTO Users (Username, Password, Email, Position, FirstName, LastName, LicenseNumber, LicenseState, LicenseType, StartDate) VALUES (?,?,?,?,?,?,?,?,?,?)');
+										$query->execute([ $Username, $Password, $Email, $Position, $FName, $LName, $LicenseNumber, $LicenseState, $LicenseType, $StartDate ]);
+										
+										$response = array("status" => 1, "message" => "OK"); // OK
+									} else {
+										$response = array("status" => 0, "message" => "ERROR: Username is in use!");
+									}
+								} else {
+									$response = array("status" => 0, "message" => "ERROR: Last name required!");
+								}
+							} else {
+								$response = array("status" => 0, "message" => "ERROR: First name required!");
+							}
+						} else {
+							$response = array("status" => 0, "message" => "ERROR: Passwords do not match!");
+						}
+					} else {
+						$response = array("status" => 0, "message" => "ERROR: Please Confirm Password!");
+					}
+				} else {
+					$response = array("status" => 0, "message" => "ERROR: Password Required!");
+				}
+					
+			} else {
+				$response = array("status" => 0, "message" => "ERROR: Username Required!");
+			}
+			
+		} else {
+			$response = array("status" => 0, "message" => "ERROR: An Email Address is Required!");
+		}
+		
+		print json_encode($response, JSON_PRETTY_PRINT);
+		die();
+
 	// User Management - Delete User
 	case "UserDel":
-		// UPDATE Users SET Active=?, FinishDate=? WHERE UserID=?
-		echo "User Management - Delete User";
+		if(isset($_POST['target']) && !empty($_POST['target'])) {
+			$userID = $_POST['target'];
+			$terminationDate = date("Y-m-d");
+			
+			$query = $pdo->prepare('UPDATE Users SET Active=?, FinishDate=? WHERE UserID=?');
+			$query->execute([ 0, $terminationDate, $userID ]);
+			$response = array("status" => 1, "message" => "");
+		} else {
+			$response = array("status" => 0, "message" => "ERROR: Unable to delete user!");
+		}
+		print json_encode($response, JSON_PRETTY_PRINT);	
 		die();
 	 
 	// User Management - Modify User
@@ -49,8 +140,9 @@ switch ($ReqTask) {
 			
 			switch ($option) {
 				case "selection":
-					$query = $pdo->prepare('SELECT UserID, Username, FirstName, LastName from Users');
-					$query->execute([ ]);
+					// Used for populating drop down menus ;)
+					$query = $pdo->prepare('SELECT UserID, Username, FirstName, LastName from Users WHERE Active=?');
+					$query->execute([ 1 ]);
 					$result = $query->fetchAll();
 					
 					// Create holding array
@@ -69,8 +161,8 @@ switch ($ReqTask) {
 			
 		} else {
 			// Hit the database for the user list
-			$query = $pdo->prepare('SELECT UserID, Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate from Users');
-			$query->execute([ ]);
+			$query = $pdo->prepare('SELECT UserID, Username, Position, Email, FirstName, LastName, LicenseNumber, LicenseType, LicenseState, AdminAccess, StartDate, FinishDate FROM Users WHERE Active=?');
+			$query->execute([ 1 ]);
 			$result = $query->fetchAll();
 			
 			// Create holding array
@@ -91,12 +183,16 @@ switch ($ReqTask) {
 					$finishedDate = $row['FinishedDate'];
 				}
 				
+				// Process License Types
+				$LicenseType = json_decode($row['LicenseType']);
+				$LicenseType = implode(", ", $LicenseType);
+				
 				// Call a modal and pass the GroupID to the modal code, so it can pass it to the API :)
 				$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Delete User\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
 				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
 				
 				// Build Array Entry
-				$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $row['LicenseType'], $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate, $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
+				$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $LicenseType, $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate, $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
 				
 				$processed[] = $arrayEntry; // Add date to processed array
 			}
@@ -110,7 +206,7 @@ switch ($ReqTask) {
 	// Group Management - Create Group
 	case "GroupList":
 		// Hit the database for the user list
-		$query = $pdo->prepare('SELECT GroupID, GroupName, GroupDescription, Location, Manager, Supervisor from UserGroups');
+		$query = $pdo->prepare('SELECT GroupID, GroupName, GroupDescription, Location, Manager, Supervisor from UserGroups WHERE disabled=0');
 		$query->execute([ ]);
 		$result = $query->fetchAll();
 		
@@ -139,15 +235,17 @@ switch ($ReqTask) {
 				$Supervisor = "Not Assigned";
 			}
 			
+			// REMOVED: To reduce complexity this has been removed - 26/04/2022
 			// LocationID to Name
-			if ($row['Location'] !== null) {
+			/*if ($row['Location'] !== null) {
 				$query = $pdo->prepare('SELECT Name from Locations WHERE LocationID=?');
 				$query->execute([ $row['Location'] ]);
 				$result = $query->fetch();
 				$location = $result['Name'];
 			} else {
 				$Supervisor = "Not Assigned";
-			}
+			}*/
+			$location = $row['Location'];
 			
 			// How many users belong to group
 			$query = $pdo->prepare('SELECT COUNT(UserID) AS Count from UserGroupMapping WHERE GroupID=?');
@@ -171,14 +269,62 @@ switch ($ReqTask) {
 		die();
 
 	case "GroupCreate":
-		// INSERT INTO UserGroups (GroupName, GroupDescription, Location, Manager, Supervisor) VALUES (?,?,?,?,?);
-		echo "Group Management - Create Group";
+		// INSERT INTO UserGroups (GroupName, GroupDescription, Location, Manager, Supervisor) VALUES (?,?,?,?,?)
+		// Run some validation
+		if(isset($_POST['Name']) && !empty($_POST['Name'])) {
+			if(isset($_POST['Location']) && !empty($_POST['Location'])) {
+				if(isset($_POST['manager']) && !empty($_POST['manager'])) {
+					if(isset($_POST['supervisor']) && !empty($_POST['supervisor'])) {
+						// Check if group name is taken!
+						$query = $pdo->prepare('SELECT GroupName from UserGroups WHERE GroupName=? LIMIT 1');
+						$query->execute([ $_POST['Name'] ]);
+						$result = $query->fetchAll();
+						
+						if ($result == NULL) {							
+							// Save variables
+							$Name = $_POST['Name']; // Group Name
+							$Desc = $_POST['Desc']; // Group Description
+							$Location = $_POST['Location']; // Group Location
+							$Manager = $_POST['manager']; // Group Managers ID
+							$Supervisor = $_POST['supervisor']; // Group Supervisors ID
+							
+							$query = $pdo->prepare('INSERT INTO UserGroups (GroupName, GroupDescription, Location, Manager, Supervisor) VALUES (?,?,?,?,?)');
+							$query->execute([ $Name, $Desc, $Location, $Manager, $Supervisor ]);
+							
+							$response = array("status" => 1, "message" => ""); // OK
+						} else {
+							$response = array("status" => 0, "message" => "ERROR: Group name already in use!");
+						}
+					} else {
+						$response = array("status" => 0, "message" => "ERROR: Supervisor Required!");
+					}
+				} else {
+					$response = array("status" => 0, "message" => "ERROR: Manager Required!");
+				}
+					
+			} else {
+				$response = array("status" => 0, "message" => "ERROR: Location Required!");
+			}
+			
+		} else {
+			$response = array("status" => 0, "message" => "ERROR: Group Name Required!");
+		}
+		
+		print json_encode($response, JSON_PRETTY_PRINT);
+		
 		die();
 		
 	// Group Management - Delete Group
 	case "GroupDel":
-		// DELETE FROM UserGroups WHERE GroupID=?
-		echo "Group Management - Delete Group";
+		if(isset($_POST['target']) && !empty($_POST['target'])) {
+			$groupID = $_POST['target'];
+			$query = $pdo->prepare('UPDATE UserGroups SET Disabled=1 WHERE GroupID=?');
+			$query->execute([ $groupID ]);
+			$response = array("status" => 1, "message" => "");
+		} else {
+			$response = array("status" => 0, "message" => "ERROR: Unable to delete group!");
+		}
+		print json_encode($response, JSON_PRETTY_PRINT);	
 		die();
 	
 	case "GroupModify":
