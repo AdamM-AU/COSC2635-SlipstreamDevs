@@ -31,3 +31,48 @@ function startTime() {
     document.getElementById('liveclock').innerHTML=(weekday[today.getDay()] + ',' + " " + today.getDate()+'<sup>'+suffixes[today.getDate()]+'</sup>' + ' of' + " " + month[today.getMonth()] + " " + today.getFullYear() + ' - ' + today.toLocaleTimeString());
     t=setTimeout(function(){startTime()},500);
 }
+// Populate form using exisiting data
+// Taken from: https://stackoverflow.com/questions/7298364/using-jquery-and-json-to-populate-forms - 2022-04-27
+// Modified by Adam Mutimer
+
+function populateForm(data) {   
+	$.each(data, function(key, value){  
+		var $ctrl = $('[name="'+key+'"]');  // Adam: Better way of doing things
+		console.log($ctrl);
+	
+		if ($ctrl.is('select')) {
+			// If 'value' is an array loop though it making the selections
+			if (Array.isArray(value)) {
+				var arrayLen = value.length;
+				for (var i = 0; i < arrayLen; i++) {
+					$("option", $ctrl).each(function() {
+						if (this.value==value[i]) { 
+							this.selected=true; 
+						}
+					});
+				}
+			} else {
+				// not an array just make one selection
+				$("option", $ctrl).each(function() {
+					if (this.value==value) { 
+						this.selected=true; 
+					}
+				});
+			}
+		}
+		else {
+			switch($ctrl.attr("type")) {  
+				case "text" :   case "hidden":  case "textarea":  
+					$ctrl.val(value);   
+					break;   
+				case "radio" : case "checkbox":   
+					$ctrl.each(function(){
+					   if($(this).attr('value') == value) {  
+							$(this).attr("checked",value); 
+					   } 
+					});   
+					break;
+			} 
+		} 
+	});
+}
