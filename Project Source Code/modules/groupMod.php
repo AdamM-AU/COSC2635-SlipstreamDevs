@@ -146,8 +146,6 @@ if (isset($_GET["task"])) {
 						<div class="col-8">
 							<select id="manager" name="manager" class="custom-select" required="required">
 								<option value="1">USERNAME (Lname + FName)</option>
-								<option value="2">john.connor (Conner, John)</option>
-								<option value="2">test (Mutimer, Adam)</option>
 							</select>
 						</div>
 					</div>
@@ -290,7 +288,59 @@ if (isset($_GET["task"])) {
 		// Show content for user modification
 		case "modify":
 ?>
-			Incomplete Module
+			<div class="col-4">
+				<form id="createGroupForm">
+					<div class="form-group row">
+						<label for="Name" class="col-4 col-form-label">Group Name</label> 
+						<div class="col-8">
+							<input id="Name" name="Name" type="text" required="required" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="Desc" class="col-4 col-form-label">Description</label> 
+						<div class="col-8">
+							<textarea id="Desc" name="Desc" cols="40" rows="5" class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="Location" class="col-4 col-form-label">Location</label> 
+						<div class="col-8">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-globe"></i>
+									</div>
+								</div> 
+								<input id="Location" name="Location" placeholder="Melbourne, Victoria" type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="manager" class="col-4 col-form-label">Manager</label> 
+						<div class="col-8">
+							<select id="manager" name="manager" class="custom-select" required="required">
+								<option value="1">USERNAME (Lname + FName)</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
+						<div class="col-8">
+							<select id="supervisor" name="supervisor" class="custom-select">
+								<option value="rabbit">USERNAME (LNAME, FNAME)</option>
+							</select>
+						</div>
+					</div> 
+					<div class="form-group row">
+						<div class="offset-4 col-8">
+							<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+							<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+						</div>
+					</div>
+					<div class="form-group row" id="message"></div>
+				</form>
+			</div>
+
 <?PHP
 			break;
 		

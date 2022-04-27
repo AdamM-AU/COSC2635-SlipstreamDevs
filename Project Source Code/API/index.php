@@ -179,8 +179,25 @@ switch ($ReqTask) {
 					
 				// Update UserData
 				case "update" :
-					// UPDATE Users SET Email=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=?, StartDate=? WHERE UserID=?
-					$response = array("status" => 1, "message" => "");
+				/* // Code is not ready, need to add validation
+					$target = $_GET['target'];
+						
+					$Email = $_POST['Email']; // Email address
+					$Username = $_POST['Username']; // Username
+					$FName = $_POST['FName']; // First Name
+					$LName = $_POST['LName']; // Last Name
+					$Position = $_POST['Position']; // Job Role
+					$LicNo = $_POST['LicNo']; // License Number
+					
+					$LicState = strtoupper($_POST['LicState']); // License Issuing State + convert to all uppercase
+					
+					$LicType = $_POST['LicType']; // License Types (array)
+					$LicType = json_encode($LicType); // Convert to JSON array to store in SQLlite
+					
+					$query = $pdo->prepare('UPDATE Users SET Email=?, Username=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=? WHERE UserID=?');
+					$query->execute([ $Email, $Username, $Position, $FName, $LName, $LicNo, $LicState, $LicType, $target ]);
+				*/
+					$response = array("status" => 0, "message" => $_POST);
 					print json_encode($response, JSON_PRETTY_PRINT);
 					die();
 				
@@ -194,10 +211,22 @@ switch ($ReqTask) {
 		}
 		die();
 	 
-	// User Management - User Password Change
+	// User Management - User Password Change (Self Change)
 	case "UserPass":
 		// UPDATE Users SET Password=? WHERE UserID=?
 		echo "User Management - User Password Change";
+		die();
+
+	// User Management - User Password Change
+	case "UserPassReset":
+	/* // Code is not ready, need to add validation
+		$target = $_POST['target']; // Target User ID
+		$password = $_POST['password']; // Plain text password
+		$password = password_hash($password, PASSWORD_DEFAULT); // Hashed Password
+		
+		$query = $pdo->prepare('UPDATE Users SET Password=? WHERE UserID=?');
+		$query->execute([ $password, $target ]);
+	*/	
 		die();
 
 	// User Management - List Users
@@ -255,7 +284,7 @@ switch ($ReqTask) {
 				$LicenseType = implode(", ", $LicenseType);
 				
 				// Call a modal and pass the GroupID to the modal code, so it can pass it to the API :)
-				if ($row['Active'] == 0) {
+				if ($row['Active'] == 1) {
 					// Delete Button
 					$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Delete User\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
 				} else {
@@ -263,7 +292,7 @@ switch ($ReqTask) {
 					$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#unDeleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Undelete User\"><i class=\"text-success fa-solid fa-check\"></i></a>";
 				}
 				
-				$passwordChange = "<i class=\" text-warning fa-solid fa-key\"></i>";
+				$passwordChange = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#passwordResetUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Password Reset\"><i class=\" text-warning fa-solid fa-key\"></i></a>";
 				
 				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-primary fa-solid fa-pen\"></i></a>";
 				
@@ -417,7 +446,7 @@ switch ($ReqTask) {
 	// Group Management - Group Add Member
 	case "GroupMemberAdd":
 		// INSERT INTO UserGroupMapping (UserID, GroupID) VALUES (?,?);
-		echo "Group Management - Add Group Memever";
+		echo "Group Management - Add Group Member";
 		die();
 
 	// Group Management - Group Delete Member

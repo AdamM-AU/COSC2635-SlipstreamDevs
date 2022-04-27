@@ -33,12 +33,11 @@ function startTime() {
 }
 // Populate form using exisiting data
 // Taken from: https://stackoverflow.com/questions/7298364/using-jquery-and-json-to-populate-forms - 2022-04-27
-// Modified by Adam Mutimer
+// Modified by Adam Mutimer - Made it more suitable for our needs
 
 function populateForm(data) {   
 	$.each(data, function(key, value){  
 		var $ctrl = $('[name="'+key+'"]');  // Adam: Better way of doing things
-		console.log($ctrl);
 	
 		if ($ctrl.is('select')) {
 			// If 'value' is an array loop though it making the selections
@@ -75,4 +74,15 @@ function populateForm(data) {
 			} 
 		} 
 	});
+}
+
+// taken from: https://stackoverflow.com/a/1497512 (2022/04/27)
+function generatePassword() {
+    var length = 8,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
 }

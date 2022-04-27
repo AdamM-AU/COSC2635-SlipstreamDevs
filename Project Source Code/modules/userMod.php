@@ -90,7 +90,6 @@ if (isset($_GET["task"])) {
 						}
 					}
 				});
-						
 			</script>
 			
 			<div class="col-6">
@@ -318,7 +317,7 @@ if (isset($_GET["task"])) {
 							$.ajax({
 								url:'<?PHP echo $baseURL; ?>/API/?task=UserPassReset',
 								type:'POST',
-								data: 'target=' + userID,
+								data: 'target=' + userID + 'password=' + password,
 								success:function(response){
 									var msg = "";
 									var responseData = jQuery.parseJSON(response);
@@ -482,11 +481,43 @@ if (isset($_GET["task"])) {
 						});
 						
 						// Process form information and submit!
+						// When page is finished loading in browser override default form action
+						$("#modUserForm").submit(function(event){
+							// cancels the form submission
+							event.preventDefault();
+							// instead of default action run javascript function below
+							submitForm("modUserForm"); // Our custom action/function
+						});
+						
+						// The custom form submission function
+						function submitForm(form){
+							if (form == "modUserForm") {
+								var formData = $("#modUserForm").serializeJSON(); // Encode entire form as JSON object
+								$.ajax({
+									url:'<?PHP echo $baseURL; ?>/API/?task=UserModify&opt=update&target=<?PHP echo $target; ?>',
+									type:'POST',
+									data: formData,
+									success:function(response){
+										var msg = "";
+										var responseData = jQuery.parseJSON(response);
+
+										if (responseData.status == 1) {
+											window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
+										} else {
+											// Error Message
+											$("#message").addClass("text-danger");
+											msg = responseData.message;
+										}
+										$("#message").html(msg);
+									}
+								});
+							}
+						}
 					});
 					</script>
 					
 					<div class="col-6">
-						<form id="modUserForm" name"modUserForm">
+						<form id="modUserForm" name="modUserForm">
 							<div class="form-group row">
 								<label for="email" class="col-4 col-form-label">Email</label> 
 								<div class="col-8">
