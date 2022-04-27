@@ -76,7 +76,7 @@ if (isset($_GET["task"])) {
 								success:function(response){
 									var msg = "";
 									var responseData = jQuery.parseJSON(response);
-									console.log(response); // Debugging purposes
+
 									if (responseData.status == 1) {
 										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
 									} else {
@@ -228,6 +228,7 @@ if (isset($_GET["task"])) {
 					
 					<script type="text/javascript">
 					var userID; // Kinda like a global
+					var password; // Kinda like a global
 					
 					$(document).ready(function() {
 						$('#dataTable-userlist').DataTable( {
@@ -248,7 +249,6 @@ if (isset($_GET["task"])) {
 						
 						// Delete the user
 						$("#deleteConfirmed").click(function (){
-							console.log(userID);
 							$.ajax({
 								url:'<?PHP echo $baseURL; ?>/API/?task=UserDel',
 								type:'POST',
@@ -256,7 +256,7 @@ if (isset($_GET["task"])) {
 								success:function(response){
 									var msg = "";
 									var responseData = jQuery.parseJSON(response);
-									console.log(response); // Debugging purposes
+
 									if (responseData.status == 1) {
 										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
 									} else {
@@ -280,7 +280,7 @@ if (isset($_GET["task"])) {
 						
 						// Delete the user
 						$("#unDeleteConfirmed").click(function (){
-							console.log(userID);
+
 							$.ajax({
 								url:'<?PHP echo $baseURL; ?>/API/?task=UserUnDel',
 								type:'POST',
@@ -288,7 +288,7 @@ if (isset($_GET["task"])) {
 								success:function(response){
 									var msg = "";
 									var responseData = jQuery.parseJSON(response);
-									console.log(response); // Debugging purposes
+
 									if (responseData.status == 1) {
 										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
 									} else {
@@ -299,7 +299,41 @@ if (isset($_GET["task"])) {
 									$("#message").html(msg);
 								}
 							});
-						});	
+						});
+						
+						// Password Confirmation - Varying Modal Content
+						$('#passwordResetUser').on('show.bs.modal', function (event) {
+						  var button = $(event.relatedTarget) // Button that triggered the modal
+						  var userName = button.data('name') // Extract info from data-* attributes
+						  userID = button.data('id') // Extract info from data-* attributes
+						  password = generatePassword(); // Generate new random password
+
+						  $("#generatedPassword").html(password);
+						  $("#passwordResetUserNameDrop").html(userName);
+						})
+						
+						// Delete the user
+						$("#passwordResetConfirmed").click(function (){
+
+							$.ajax({
+								url:'<?PHP echo $baseURL; ?>/API/?task=UserPassReset',
+								type:'POST',
+								data: 'target=' + userID,
+								success:function(response){
+									var msg = "";
+									var responseData = jQuery.parseJSON(response);
+
+									if (responseData.status == 1) {
+										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
+									} else {
+										// Error Message
+										$("#message").addClass("text-danger");
+										msg = responseData.message;
+									}
+									$("#message").html(msg);
+								}
+							});
+						});						
 					} );
 					</script>
 			        
@@ -394,6 +428,28 @@ if (isset($_GET["task"])) {
 						</div>
 					  </div>
 					</div>
+					
+					<!-- Modal - Password Reset Confirmation -->
+					<div class="modal fade" id="passwordResetUser" tabindex="-1" role="dialog" aria-labelledby="passwordResetUserTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title text-danger" id="passwordResetUserCenterTitle">Confirmation Required!</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  <div class="modal-body">
+							New Password: <span id="generatedPassword"></span><br />
+							Reset the password for "<span id="passwordResetUserNameDrop"></span>" ?
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+							<button id="passwordResetConfirmed" type="button" class="btn btn-danger">Reset Password</button>
+						  </div>
+						</div>
+					  </div>
+					</div>					
 <?PHP
 		break;
 		
@@ -405,7 +461,7 @@ if (isset($_GET["task"])) {
 					var userID; // Kinda like a global
 					
 					$(document).ready(function() {
-						// On page load populate target form
+						// On page load populate target form with target user data
 						$.ajax({
 							url:'<?PHP echo $baseURL; ?>/API/?task=UserModify&opt=fetch&target=<?PHP echo $target; ?>',
 							type:'POST',
@@ -413,8 +469,7 @@ if (isset($_GET["task"])) {
 							success:function(response){
 								var msg = "";
 								var responseData = jQuery.parseJSON(response);
-								console.log(response); // Debugging purposes
-								//console.log();
+
 								if (responseData.status == 1) {
 									populateForm(responseData.data);
 								} else {
@@ -425,8 +480,11 @@ if (isset($_GET["task"])) {
 								$("#message").html(msg);
 							}
 						});
+						
+						// Process form information and submit!
 					});
 					</script>
+					
 					<div class="col-6">
 						<form id="modUserForm" name"modUserForm">
 							<div class="form-group row">
@@ -526,14 +584,7 @@ if (isset($_GET["task"])) {
 					</div>
 <?PHP
 			break;
-		
-		// Show content for deleting a user
-		case "delete":
-?>
-			Incomplete Module
-<?PHP
-			break;
-		
+			
 		// Default Content
 		default: 
 ?>
