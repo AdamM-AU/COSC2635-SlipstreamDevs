@@ -287,59 +287,143 @@ if (isset($_GET["task"])) {
 		
 		// Show content for user modification
 		case "modify":
+		$target = $_GET['target'];
 ?>
-			<div class="col-4">
-				<form id="createGroupForm">
-					<div class="form-group row">
-						<label for="Name" class="col-4 col-form-label">Group Name</label> 
-						<div class="col-8">
-							<input id="Name" name="Name" type="text" required="required" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="Desc" class="col-4 col-form-label">Description</label> 
-						<div class="col-8">
-							<textarea id="Desc" name="Desc" cols="40" rows="5" class="form-control"></textarea>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="Location" class="col-4 col-form-label">Location</label> 
-						<div class="col-8">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<i class="fa fa-globe"></i>
-									</div>
-								</div> 
-								<input id="Location" name="Location" placeholder="Melbourne, Victoria" type="text" class="form-control">
+					<script type="text/javascript">
+						var groupID; // Kinda like a global
+						$(document).ready(function() {
+							// Auto Fill the supervisor and manager drop down selections, Needs to be done before we prefil form
+							var dropdownManager = $('#Manager');
+							var dropdownSupervisor = $('#Supervisor');
+							
+							dropdownManager.empty(); 	// Flush all values
+							dropdownSupervisor.empty(); // Flush all values
+							
+							// Set Default Placeholders
+							dropdownManager.append('<option selected="true" disabled>Select a Manager</option>');
+							dropdownManager.prop('selectedIndex', 0);
+
+							dropdownSupervisor.append('<option selected="true" disabled>Select a Supervisor</option>');
+							dropdownSupervisor.prop('selectedIndex', 0);
+							
+							// JSON Request no ajax this time.. we work or fail
+							var url = '<?PHP echo $baseURL; ?>/API/?task=UserList&opt=selection'
+
+							$.getJSON(url, function (data) {
+								$.each(data, function (key, entry) {
+									dropdownManager.append($('<option></option>').attr('value', entry.id).text(entry.text));
+									dropdownSupervisor.append($('<option></option>').attr('value', entry.id).text(entry.text));
+								})
+							});
+							
+							// On page load populate target form with target user data
+							$.ajax({
+								url:'<?PHP echo $baseURL; ?>/API/?task=GroupModify&opt=fetch&target=<?PHP echo $target; ?>',
+								type:'POST',
+								data: '',
+								success:function(response){
+									var msg = "";
+									var responseData = jQuery.parseJSON(response);
+
+									if (responseData.status == 1) {
+										populateForm(responseData.data);
+									} else {
+										// Error Message
+										$("#message").addClass("text-danger");
+										msg = responseData.message;
+									}
+									$("#message").html(msg);
+								}
+							});
+							
+							// Process form information and submit!
+							// When page is finished loading in browser override default form action
+							$("#modGroupForm").submit(function(event){
+								// cancels the form submission
+								event.preventDefault();
+								// instead of default action run javascript function below
+								submitForm("modGroupForm"); // Our custom action/function
+							});
+							
+							// The custom form submission function
+							function submitForm(form){
+								if (form == "modGroupForm") {
+									var formData = $("#modGroupForm").serializeJSON(); // Encode entire form as JSON object
+									$.ajax({
+										url:'<?PHP echo $baseURL; ?>/API/?task=GroupModify&opt=update&target=<?PHP echo $target; ?>',
+										type:'POST',
+										data: formData,
+										success:function(response){
+											var msg = "";
+											var responseData = jQuery.parseJSON(response);
+
+											if (responseData.status == 1) {
+												window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
+											} else {
+												// Error Message
+												$("#message").addClass("text-danger");
+												msg = responseData.message;
+											}
+											$("#message").html(msg);
+										}
+									});
+								}
+							}
+						});
+					</script>
+
+					<div class="col-4">
+						<form id="createGroupForm">
+							<div class="form-group row">
+								<label for="Name" class="col-4 col-form-label">Group Name</label> 
+								<div class="col-8">
+									<input id="Name" name="Name" type="text" required="required" class="form-control">
+								</div>
 							</div>
-						</div>
+							<div class="form-group row">
+								<label for="Desc" class="col-4 col-form-label">Description</label> 
+								<div class="col-8">
+									<textarea type="textarea" id="Desc" name="Desc" cols="40" rows="5" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="Location" class="col-4 col-form-label">Location</label> 
+								<div class="col-8">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-globe"></i>
+											</div>
+										</div> 
+										<input id="Location" name="Location" placeholder="Melbourne, Victoria" type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="manager" class="col-4 col-form-label">Manager</label> 
+								<div class="col-8">
+									<select id="Manager" name="Manager" class="custom-select" required="required">
+										<option value="1">USERNAME (Lname + FName)</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
+								<div class="col-8">
+									<select id="Supervisor" name="Supervisor" class="custom-select">
+										<option value="rabbit">USERNAME (LNAME, FNAME)</option>
+									</select>
+								</div>
+							</div> 
+							<div class="form-group row">
+								<div class="offset-4 col-8">
+									<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+									<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+								</div>
+							</div>
+							<div class="form-group row" id="message"></div>
+						</form>
 					</div>
-					<div class="form-group row">
-						<label for="manager" class="col-4 col-form-label">Manager</label> 
-						<div class="col-8">
-							<select id="manager" name="manager" class="custom-select" required="required">
-								<option value="1">USERNAME (Lname + FName)</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
-						<div class="col-8">
-							<select id="supervisor" name="supervisor" class="custom-select">
-								<option value="rabbit">USERNAME (LNAME, FNAME)</option>
-							</select>
-						</div>
-					</div> 
-					<div class="form-group row">
-						<div class="offset-4 col-8">
-							<button name="submit" type="submit" class="btn btn-primary">Submit</button>
-							<button name="reset" type="reset" class="btn btn-danger">Reset</button>
-						</div>
-					</div>
-					<div class="form-group row" id="message"></div>
-				</form>
-			</div>
 
 <?PHP
 			break;
