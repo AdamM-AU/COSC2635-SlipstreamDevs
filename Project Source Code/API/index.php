@@ -179,25 +179,37 @@ switch ($ReqTask) {
 					
 				// Update UserData
 				case "update" :
-				/* // Code is not ready, need to add validation
-					$target = $_GET['target'];
+					if(isset($_GET['target']) && !empty($_GET['target'])) {
+						$target = $_GET['target'];
 						
-					$Email = $_POST['Email']; // Email address
-					$Username = $_POST['Username']; // Username
-					$FName = $_POST['FName']; // First Name
-					$LName = $_POST['LName']; // Last Name
-					$Position = $_POST['Position']; // Job Role
-					$LicNo = $_POST['LicNo']; // License Number
-					
-					$LicState = strtoupper($_POST['LicState']); // License Issuing State + convert to all uppercase
-					
-					$LicType = $_POST['LicType']; // License Types (array)
-					$LicType = json_encode($LicType); // Convert to JSON array to store in SQLlite
-					
-					$query = $pdo->prepare('UPDATE Users SET Email=?, Username=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=? WHERE UserID=?');
-					$query->execute([ $Email, $Username, $Position, $FName, $LName, $LicNo, $LicState, $LicType, $target ]);
-				*/
-					$response = array("status" => 0, "message" => $_POST);
+						// Check user exists in database
+						$query = $pdo->prepare('SELECT Username FROM Users WHERE UserID=?');
+						$query->execute([ $target ]);
+						$result = $query->fetch();
+						
+						// Does the user exist?
+						if ($result != NULL) {
+							$Email = $_POST['Email']; // Email address
+							$Username = $_POST['Username']; // Username
+							$FName = $_POST['FName']; // First Name
+							$LName = $_POST['LName']; // Last Name
+							$Position = $_POST['Position']; // Job Role
+							$LicNo = $_POST['LicNo']; // License Number
+							
+							$LicState = strtoupper($_POST['LicState']); // License Issuing State + convert to all uppercase
+							
+							$LicType = $_POST['LicType']; // License Types (array)
+							$LicType = json_encode($LicType); // Convert to JSON array to store in SQLlite
+							
+							$query = $pdo->prepare('UPDATE Users SET Email=?, Username=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=? WHERE UserID=?');
+							$query->execute([ $Email, $Username, $Position, $FName, $LName, $LicNo, $LicState, $LicType, $target ]);
+							$response = array("status" => 1, "message" => "");
+						} else {
+							$response = array("status" => 0, "message" => "ERROR: User not found!");
+						}
+					} else {
+						$response = array("status" => 0, "message" => "ERROR: User not found!");
+					}
 					print json_encode($response, JSON_PRETTY_PRINT);
 					die();
 				
@@ -219,14 +231,30 @@ switch ($ReqTask) {
 
 	// User Management - User Password Change
 	case "UserPassReset":
-	/* // Code is not ready, need to add validation
-		$target = $_POST['target']; // Target User ID
-		$password = $_POST['password']; // Plain text password
-		$password = password_hash($password, PASSWORD_DEFAULT); // Hashed Password
+		if(isset($_POST['target']) && !empty($_POST['target'])) {
+			$target = $_POST['target']; // Target User ID
+			
+			// Check user exists in database
+			$query = $pdo->prepare('SELECT Username FROM Users WHERE UserID=?');
+			$query->execute([ $target ]);
+			$result = $query->fetch();
+			
+			// Does the user exist?
+			if ($result != NULL) {
+				$password = $_POST['password']; // Plain text password
+				$password = password_hash($password, PASSWORD_DEFAULT); // Hashed Password
+			
+				$query = $pdo->prepare('UPDATE Users SET Password=? WHERE UserID=?');
+				$query->execute([ $password, $target ]);
+				$response = array("status" => 1, "message" => "");
+			} else {
+				$response = array("status" => 0, "message" => "ERROR: User not found!");
+			}
+		} else {
+			$response = array("status" => 0, "message" => "ERROR: User not found!");
+		}
 		
-		$query = $pdo->prepare('UPDATE Users SET Password=? WHERE UserID=?');
-		$query->execute([ $password, $target ]);
-	*/	
+		print json_encode($response, JSON_PRETTY_PRINT);
 		die();
 
 	// User Management - List Users

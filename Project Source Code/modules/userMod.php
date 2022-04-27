@@ -317,7 +317,7 @@ if (isset($_GET["task"])) {
 							$.ajax({
 								url:'<?PHP echo $baseURL; ?>/API/?task=UserPassReset',
 								type:'POST',
-								data: 'target=' + userID + 'password=' + password,
+								data: 'target=' + userID + '&password=' + password,
 								success:function(response){
 									var msg = "";
 									var responseData = jQuery.parseJSON(response);
