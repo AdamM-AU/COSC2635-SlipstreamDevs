@@ -263,15 +263,17 @@ switch ($ReqTask) {
 					$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#unDeleteUser\" data-id=\"" . $row['UserID'] . "\" data-name=\"" . $row['Username'] . "\" alt=\"Undelete User\"><i class=\"text-success fa-solid fa-check\"></i></a>";
 				}
 				
-				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
+				$passwordChange = "<i class=\" text-warning fa-solid fa-key\"></i>";
+				
+				$editButton = "<a href=\"$baseURL/dashboard.php?module=userMod&task=modify&target=$row[UserID]\" alt=\"Edit User\"><i class=\"text-primary fa-solid fa-pen\"></i></a>";
 				
 				// Build Array Entry
 				if ($row['Active'] == 1) {
 					// Active Accounts
-					$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $LicenseType, $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate, $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
+					$arrayEntry = array($row['Username'], $row['Position'], $row['Email'], $row['FirstName'], $row['LastName'], $row['LicenseNumber'], $LicenseType, $row['LicenseState'], $adminAccess, $row['StartDate'], $finishedDate, $passwordChange . '&nbsp;&nbsp;&nbsp;&nbsp;' . $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
 				} else {
 					// Inactive Accounts
-					$arrayEntry = array('<i><s>' . $row['Username'] . '</s></i>', '<i>' . $row['Position'] . '</i>', '<i>' . $row['Email'] . '</i>', '<i>' . $row['FirstName'] . '</i>', '<i>' . $row['LastName'] . '</i>', '<i>' . $row['LicenseNumber'] . '</i>', '<i>' . $LicenseType . '</i>', '<i>' . $row['LicenseState'] . '</i>', '<i>' . $adminAccess . '</i>', '<i>' . $row['StartDate'] . '</i>', '<i>' . $finishedDate . '</i>', $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
+					$arrayEntry = array('<i><s>' . $row['Username'] . '</s></i>', '<i>' . $row['Position'] . '</i>', '<i>' . $row['Email'] . '</i>', '<i>' . $row['FirstName'] . '</i>', '<i>' . $row['LastName'] . '</i>', '<i>' . $row['LicenseNumber'] . '</i>', '<i>' . $LicenseType . '</i>', '<i>' . $row['LicenseState'] . '</i>', '<i>' . $adminAccess . '</i>', '<i>' . $row['StartDate'] . '</i>', '<i>' . $finishedDate . '</i>', $passwordChange . '&nbsp;&nbsp;&nbsp;&nbsp;' . $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
 				}
 				
 				$processed[] = $arrayEntry; // Add date to processed array
