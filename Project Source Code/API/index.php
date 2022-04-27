@@ -157,11 +157,11 @@ switch ($ReqTask) {
 							$processed = array( "Username" => $result['Username'],
 												"Email" => $result['Email'],
 												"Position" => $result['Position'],
-												"FirstName" => $result['FisrtName'],
-												"LastName" => $result['LastName'],
-												"LicenseNumber" => $result['LicenseNumber'],
-												"LicenseState" => $result['LicenseState'],
-												"LicenseType" => json_decode($result['LicenseType']) // This is stored in the database as a json array, as SQLite cannot store array datatypes :)
+												"FName" => $result['FirstName'],
+												"LName" => $result['LastName'],
+												"LicNo" => $result['LicenseNumber'],
+												"LicState" => strtolower($result['LicenseState']),
+												"LicType[]" => json_decode($result['LicenseType']) // This is stored in the database as a json array, as SQLite cannot store array datatypes :)
 												);
 							$response = array("status" => 1, "message" => "", "data" => $processed);
 							print json_encode($response, JSON_PRETTY_PRINT);
