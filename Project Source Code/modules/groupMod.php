@@ -23,8 +23,8 @@ if (isset($_GET["task"])) {
 			$genreportButton = false;
 			break;
 		
-		case "delete":
-			$subtitle = "Delete Group";
+		case "memberControl":
+			$subtitle = "Member Control";
 			$genreportButton = false;
 			break;
 		
@@ -427,7 +427,9 @@ if (isset($_GET["task"])) {
 
 <?PHP
 			break;
-		
+		case "memberControl":
+			echo "Incomplete Module";
+		break;
 		// Default Content
 		default: 
 ?>
