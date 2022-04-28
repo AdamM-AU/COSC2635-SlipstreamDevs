@@ -53,119 +53,122 @@ if (isset($_GET["task"])) {
 		// Show user list content
 		case "create":
 ?>
-			<script type="text/javascript">
-				// Adam: Lets use the API to fill the drop down selections ;) 
-				$(document).ready(function() {
-					var dropdownManager = $('#Manager');
-					var dropdownSupervisor = $('#Supervisor');
-					
-					dropdownManager.empty(); 	// Flush all values
-					dropdownSupervisor.empty(); // Flush all values
-					
-					// Set Default Placeholders
-					dropdownManager.append('<option selected="true" disabled>Select a Manager</option>');
-					dropdownManager.prop('selectedIndex', 0);
+					<script type="text/javascript">
+						// Adam: Lets use the API to fill the drop down selections ;) 
+						$(document).ready(function() {
+							var dropdownManager = $('#Manager');
+							var dropdownSupervisor = $('#Supervisor');
+							
+							dropdownManager.empty(); 	// Flush all values
+							dropdownSupervisor.empty(); // Flush all values
+							
+							// Set Default Placeholders
+							dropdownManager.append('<option selected="true" disabled>Select a Manager</option>');
+							dropdownManager.prop('selectedIndex', 0);
 
-					dropdownSupervisor.append('<option selected="true" disabled>Select a Supervisor</option>');
-					dropdownSupervisor.prop('selectedIndex', 0);
-					
-					// JSON Request no ajax this time.. we work or fail
-					var url = '<?PHP echo $baseURL; ?>/API/?task=UserList&opt=selection'
-					
-					$.getJSON(url, function (data) {
-						$.each(data, function (key, entry) {
-							dropdownManager.append($('<option></option>').attr('value', entry.id).text(entry.text));
-							dropdownSupervisor.append($('<option></option>').attr('value', entry.id).text(entry.text));
-						})
-					});
-					
-					// When page is finished loading in browser override default form action
-					$("#createGroupForm").submit(function(event){
-						// cancels the form submission
-						event.preventDefault();
-						// instead of default action run javascript function below
-						submitForm("createGroupForm"); // Our custom action/function
-					});
-					
-					// The custom form submission function
-					function submitForm(form){
-						if (form == "createGroupForm") {
-							var formData = $("#createGroupForm").serializeJSON(); // Encode entire form as JSON object
-							$.ajax({
-								url:'<?PHP echo $baseURL; ?>/API/?task=GroupCreate',
-								type:'POST',
-								data: formData,
-								success:function(response){
-									var msg = "";
-									var responseData = jQuery.parseJSON(response);
-									console.log(response); // Debugging purposes
-									if (responseData.status == 1) {
-										window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
-									} else {
-										// Error Message
-										$("#message").addClass("text-danger");
-										msg = responseData.message;
-									}
-									$("#message").html(msg);
-								}
+							dropdownSupervisor.append('<option selected="true" disabled>Select a Supervisor</option>');
+							dropdownSupervisor.prop('selectedIndex', 0);
+							
+							// JSON Request no ajax this time.. we work or fail
+							var url = '<?PHP echo $baseURL; ?>/API/?task=UserList&opt=selection'
+							
+							$.getJSON(url, function (data) {
+								$.each(data, function (key, entry) {
+									dropdownManager.append($('<option></option>').attr('value', entry.id).text(entry.text));
+									dropdownSupervisor.append($('<option></option>').attr('value', entry.id).text(entry.text));
+								})
 							});
-						}
-					}
-				});
-						
-			</script>
-			<div class="col-4">
-				<form id="createGroupForm">
-					<div class="form-group row">
-						<label for="Name" class="col-4 col-form-label">Group Name</label> 
-						<div class="col-8">
-							<input id="Name" name="Name" type="text" required="required" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="Desc" class="col-4 col-form-label">Description</label> 
-						<div class="col-8">
-							<textarea id="Desc" name="Desc" cols="40" rows="5" class="form-control"></textarea>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="Location" class="col-4 col-form-label">Location</label> 
-						<div class="col-8">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<i class="fa fa-globe"></i>
+							
+							// When page is finished loading in browser override default form action
+							$("#createGroupForm").submit(function(event){
+								// cancels the form submission
+								event.preventDefault();
+								// instead of default action run javascript function below
+								submitForm("createGroupForm"); // Our custom action/function
+							});
+							
+							// The custom form submission function
+							function submitForm(form){
+								if (form == "createGroupForm") {
+									var formData = $("#createGroupForm").serializeJSON(); // Encode entire form as JSON object
+									$.ajax({
+										url:'<?PHP echo $baseURL; ?>/API/?task=GroupCreate',
+										type:'POST',
+										data: formData,
+										success:function(response){
+											var msg = "";
+											var responseData = jQuery.parseJSON(response);
+											console.log(response); // Debugging purposes
+											if (responseData.status == 1) {
+												window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
+											} else {
+												// Error Message
+												$("#message").addClass("text-danger");
+												msg = responseData.message;
+											}
+											$("#message").html(msg);
+										}
+									});
+								}
+							}
+						});
+								
+					</script>
+					
+					<div class="card shadow mb-4" style="width: 40%;">
+						<div class="card-body" >
+							<form id="createGroupForm">
+								<div class="form-group row">
+									<label for="Name" class="col-4 col-form-label">Group Name</label> 
+									<div class="col-8">
+										<input id="Name" name="Name" type="text" required="required" class="form-control">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="Desc" class="col-4 col-form-label">Description</label> 
+									<div class="col-8">
+										<textarea id="Desc" name="Desc" cols="40" rows="5" class="form-control"></textarea>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="Location" class="col-4 col-form-label">Location</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-globe"></i>
+												</div>
+											</div> 
+											<input id="Location" name="Location" placeholder="Melbourne, Victoria" type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="manager" class="col-4 col-form-label">Manager</label> 
+									<div class="col-8">
+										<select id="Manager" name="Manager" class="custom-select" required="required">
+											<option value="1">USERNAME (Lname + FName)</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
+									<div class="col-8">
+										<select id="Supervisor" name="Supervisor" class="custom-select">
+											<option value="rabbit">USERNAME (LNAME, FNAME)</option>
+										</select>
 									</div>
 								</div> 
-								<input id="Location" name="Location" placeholder="Melbourne, Victoria" type="text" class="form-control">
-							</div>
+								<div class="form-group row">
+									<div class="offset-4 col-8">
+										<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+										<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+									</div>
+								</div>
+								<div class="form-group row" id="message"></div>
+							</form>
 						</div>
-					</div>
-					<div class="form-group row">
-						<label for="manager" class="col-4 col-form-label">Manager</label> 
-						<div class="col-8">
-							<select id="Manager" name="Manager" class="custom-select" required="required">
-								<option value="1">USERNAME (Lname + FName)</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
-						<div class="col-8">
-							<select id="Supervisor" name="Supervisor" class="custom-select">
-								<option value="rabbit">USERNAME (LNAME, FNAME)</option>
-							</select>
-						</div>
-					</div> 
-					<div class="form-group row">
-						<div class="offset-4 col-8">
-							<button name="submit" type="submit" class="btn btn-primary">Submit</button>
-							<button name="reset" type="reset" class="btn btn-danger">Reset</button>
-						</div>
-					</div>
-					<div class="form-group row" id="message"></div>
-				</form>
-			</div>
+				</div>
 
 <?PHP
 			break;
@@ -292,6 +295,45 @@ if (isset($_GET["task"])) {
 					<script type="text/javascript">
 						var groupID; // Kinda like a global
 						$(document).ready(function() {
+							// Populate the form with existing database information
+							fillForm();
+							
+							// Process form information and submit!
+							// When page is finished loading in browser override default form action
+							$("#modGroupForm").submit(function(event){
+								// cancels the form submission
+								event.preventDefault();
+								// instead of default action run javascript function below
+								submitForm("modGroupForm"); // Our custom action/function
+							});
+							
+							// The custom form submission function
+							function submitForm(form){
+								if (form == "modGroupForm") {
+									var formData = $("#modGroupForm").serializeJSON(); // Encode entire form as JSON object
+									$.ajax({
+										url:'<?PHP echo $baseURL; ?>/API/?task=GroupModify&opt=update&target=<?PHP echo $target; ?>',
+										type:'POST',
+										data: formData,
+										success:function(response){
+											var msg = "";
+											var responseData = jQuery.parseJSON(response);
+
+											if (responseData.status == 1) {
+												window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
+											} else {
+												// Error Message
+												$("#message").addClass("text-danger");
+												msg = responseData.message;
+											}
+											$("#message").html(msg);
+										}
+									});
+								}
+							}
+						});
+						
+						function fillForm() {
 							// Auto Fill the supervisor and manager drop down selections, Needs to be done before we prefil form
 							var dropdownManager = $('#Manager');
 							var dropdownSupervisor = $('#Supervisor');
@@ -335,100 +377,109 @@ if (isset($_GET["task"])) {
 									}
 								});
 							});
-							
-							// Process form information and submit!
-							// When page is finished loading in browser override default form action
-							$("#modGroupForm").submit(function(event){
-								// cancels the form submission
-								event.preventDefault();
-								// instead of default action run javascript function below
-								submitForm("modGroupForm"); // Our custom action/function
-							});
-							
-							// The custom form submission function
-							function submitForm(form){
-								if (form == "modGroupForm") {
-									var formData = $("#modGroupForm").serializeJSON(); // Encode entire form as JSON object
-									$.ajax({
-										url:'<?PHP echo $baseURL; ?>/API/?task=GroupModify&opt=update&target=<?PHP echo $target; ?>',
-										type:'POST',
-										data: formData,
-										success:function(response){
-											var msg = "";
-											var responseData = jQuery.parseJSON(response);
-
-											if (responseData.status == 1) {
-												window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
-											} else {
-												// Error Message
-												$("#message").addClass("text-danger");
-												msg = responseData.message;
-											}
-											$("#message").html(msg);
-										}
-									});
-								}
-							}
-						});
+						}
 					</script>
 
-					<div class="col-4">
-						<form id="modGroupForm">
-							<div class="form-group row">
-								<label for="Name" class="col-4 col-form-label">Group Name</label> 
-								<div class="col-8">
-									<input id="Name" name="Name" type="text" required="required" class="form-control">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Desc" class="col-4 col-form-label">Description</label> 
-								<div class="col-8">
-									<textarea type="textarea" id="Desc" name="Desc" cols="40" rows="5" class="form-control"></textarea>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Location" class="col-4 col-form-label">Location</label> 
-								<div class="col-8">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-globe"></i>
-											</div>
-										</div> 
-										<input id="Location" name="Location" placeholder="Melbourne, Victoria" type="text" class="form-control">
+					<div class="card shadow mb-4" style="width: 40%;">
+						<div class="card-body" >
+							<form id="modGroupForm" onReset="fillForm();">
+								<div class="form-group row">
+									<label for="Name" class="col-4 col-form-label">Group Name</label> 
+									<div class="col-8">
+										<input id="Name" name="Name" type="text" required="required" class="form-control">
 									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label for="manager" class="col-4 col-form-label">Manager</label> 
-								<div class="col-8">
-									<select id="Manager" name="Manager" class="custom-select" required="required">
-										<option value="1">USERNAME (Lname + FName)</option>
-									</select>
+								<div class="form-group row">
+									<label for="Desc" class="col-4 col-form-label">Description</label> 
+									<div class="col-8">
+										<textarea type="textarea" id="Desc" name="Desc" cols="40" rows="5" class="form-control"></textarea>
+									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
-								<div class="col-8">
-									<select id="Supervisor" name="Supervisor" class="custom-select">
-										<option value="rabbit">USERNAME (LNAME, FNAME)</option>
-									</select>
+								<div class="form-group row">
+									<label for="Location" class="col-4 col-form-label">Location</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-globe"></i>
+												</div>
+											</div> 
+											<input id="Location" name="Location" placeholder="Melbourne, Victoria" type="text" class="form-control">
+										</div>
+									</div>
 								</div>
-							</div> 
-							<div class="form-group row">
-								<div class="offset-4 col-8">
-									<button name="submit" type="submit" class="btn btn-primary">Submit</button>
-									<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+								<div class="form-group row">
+									<label for="manager" class="col-4 col-form-label">Manager</label> 
+									<div class="col-8">
+										<select id="Manager" name="Manager" class="custom-select" required="required">
+											<option value="1">USERNAME (Lname + FName)</option>
+										</select>
+									</div>
 								</div>
-							</div>
-							<div class="form-group row" id="message"></div>
-						</form>
+								<div class="form-group row">
+									<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
+									<div class="col-8">
+										<select id="Supervisor" name="Supervisor" class="custom-select">
+											<option value="rabbit">USERNAME (LNAME, FNAME)</option>
+										</select>
+									</div>
+								</div> 
+								<div class="form-group row">
+									<div class="offset-4 col-8">
+										<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+										<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+									</div>
+								</div>
+								<div class="form-group row" id="message"></div>
+							</form>
+						</div>
 					</div>
 
 <?PHP
 			break;
 		case "memberControl":
-			echo "Incomplete Module";
+?>
+					<script type="text/javascript">
+						var groupID; // Kinda like a global
+						$(document).ready(function() {
+							var dualList = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+								nonSelectedListLabel: 'Non-Members',
+								selectedListLabel: 'Members',
+								moveAllLabel: 'Add All',
+								preserveSelectionOnMove: 'moved',
+								moveOnSelect: false,
+								btnClass: 'btn-outline-secondary',
+								btnMoveText: ' Add &gt;',
+								btnRemoveText: '&lt; Remove',
+								btnMoveAllText: 'Add All &gt;&gt;',
+								btnRemoveAllText: '&lt;&lt; Remove All'
+							});
+						});
+					</script>
+					<div class="card shadow mb-4" style="width: 50%;">
+						<div class="card-body">
+							<h5>SomeGroup Name [VERY DIRTY!!! and incomplete]</h5>
+							<form id="demoform" action="#" method="post">
+								<select multiple="multiple" size="10" name="duallistbox_demo1[]">
+									<option value="option1">User 1</option>
+									<option value="option2">User 2</option>
+									<option value="option3" selected="selected">User 3</option>
+									<option value="option4">User 4</option>
+									<option value="option5">User 5</option>
+									<option value="option6" selected="selected">User 6</option>
+									<option value="option7">User 7</option>
+									<option value="option8">User 8</option>
+									<option value="option9">User 9</option>
+									<option value="option0">User 10</option>
+								</select>
+								<br>
+								<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+								<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+							</form>
+						</div>
+					</div>
+
+<?PHP
 		break;
 		// Default Content
 		default: 

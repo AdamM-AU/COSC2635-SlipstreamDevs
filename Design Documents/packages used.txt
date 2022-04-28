@@ -9,6 +9,6 @@ The following external packages are in use:
 - Boostrap (v4.1.3) ---> https://getbootstrap.com/docs/4.1/getting-started/introduction/
 - Font Awesome Free (6.1.0) ---> https://fontawesome.com/
 - DataTables - https://datatables.net/
-- Bootstrap Dual Listbox - https://www.virtuosoft.eu/code/bootstrap-duallistbox/
+- Bootstrap Dual Listbox - https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox
 - ChartJS - https://www.chartjs.org/
 ... More to come....

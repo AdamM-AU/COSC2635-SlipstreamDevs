@@ -395,8 +395,7 @@ switch ($ReqTask) {
 			// Call a modal and pass the GroupID to the modal code, so it can pass it to the API :)
 			$deleteButton = "<a href=\"#\" data-toggle=\"modal\" data-target=\"#deleteGroup\" data-id=\"" . $row['GroupID'] . "\" data-name=\"" . $row['GroupName'] . "\" alt=\"Delete Group\"><i class=\"text-danger fa-solid fa-x\"></i></a>";
 			$editButton = "<a href=\"$baseURL/dashboard.php?module=groupMod&task=modify&target=$row[GroupID]\" alt=\"Edit Group\"><i class=\"text-warning fa-solid fa-pen\"></i></a>";
-			$membersButton = "<i class=\"text-success fa-solid fa-users\"></i>";
-			
+			$membersButton = "<a href=\"$baseURL/dashboard.php?module=groupMod&task=memberControl&target=$row[GroupID]\" alt=\"Edit Group\"><i class=\"text-success fa-solid fa-users\"></i></a>";			
 			
 			// Build Array Entry
 			$arrayEntry = array($row['GroupName'], $row['GroupDescription'], $location, $manager, $supervisor, $userCount, $membersButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $editButton . '&nbsp;&nbsp;&nbsp;&nbsp;' . $deleteButton);
@@ -542,16 +541,10 @@ switch ($ReqTask) {
 		}
 		die();
 	
-	// Group Management - Group Add Member
-	case "GroupMemberAdd":
+	// Group Management - Group Add/Remove Memberss
+	case "GroupMembers":
 		// INSERT INTO UserGroupMapping (UserID, GroupID) VALUES (?,?);
-		echo "Group Management - Add Group Member";
-		die();
-
-	// Group Management - Group Delete Member
-	case "GroupMemberDel":
-		// DELETE FROM UserGroupMapping WHERE UserID=? AND GroupID=?
-		echo "Group Management - Delete/Remove Group Member";
+		echo "Group Management - Add/Remove Group Member";
 		die();
 		
 	// ----- END OF DEFINED TASKS ----- //

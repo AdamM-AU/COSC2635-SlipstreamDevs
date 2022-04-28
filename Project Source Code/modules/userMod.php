@@ -92,129 +92,131 @@ if (isset($_GET["task"])) {
 				});
 			</script>
 			
-			<div class="col-6">
-				<form id="createUserForm">
-					<div class="form-group row">
-						<label for="email" class="col-4 col-form-label">Email</label> 
-						<div class="col-8">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<i class="fa fa-at"></i>
-									</div>
-								</div> 
-								<input id="Email" name="Email" placeholder="j.connor@slipstreamdevs.tech" type="text" required="required" class="form-control">
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="Username" class="col-4 col-form-label">Username</label> 
-						<div class="col-8">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<i class="fa fa-user-circle"></i>
-									</div>
-								</div> 
-								<input id="Username" name="Username" placeholder="Username" type="text" class="form-control" required="required">
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="Password" class="col-4 col-form-label">Password</label> 
-						<div class="col-8">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<i class="fa fa-key"></i>
+					<div class="card shadow mb-4" style="width: 50%;">
+						<div class="card-body" >
+							<form id="createUserForm">
+								<div class="form-group row">
+									<label for="email" class="col-4 col-form-label">Email</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-at"></i>
+												</div>
+											</div> 
+											<input id="Email" name="Email" placeholder="j.connor@slipstreamdevs.tech" type="text" required="required" class="form-control">
+										</div>
 									</div>
 								</div>
-								<input id="Password" name="Password" placeholder="Password" type="text" class="form-control" required="required">
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="text" class="col-4 col-form-label">Confirm Password</label> 
-						<div class="col-8">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<i class="fa fa-key"></i>
+								<div class="form-group row">
+									<label for="Username" class="col-4 col-form-label">Username</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-user-circle"></i>
+												</div>
+											</div> 
+											<input id="Username" name="Username" placeholder="Username" type="text" class="form-control" required="required">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="Password" class="col-4 col-form-label">Password</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-key"></i>
+												</div>
+											</div>
+											<input id="Password" name="Password" placeholder="Password" type="text" class="form-control" required="required">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="text" class="col-4 col-form-label">Confirm Password</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-key"></i>
+												</div>
+											</div> 
+											<input id="PasswordConf" name="PasswordConf" placeholder="Confirm Password" type="text" class="form-control" required="required">
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="form-group row">
+									<label for="FName" class="col-4 col-form-label">First Name</label> 
+									<div class="col-8">
+										<input id="FName" name="FName" placeholder="John" type="text" class="form-control" required="required">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="LName" class="col-4 col-form-label">Last Name</label> 
+									<div class="col-8">
+										<input id="LName" name="LName" placeholder="Connor" type="text" class="form-control" required="required">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="position" class="col-4 col-form-label">Job Position</label> 
+									<div class="col-8">
+										<input id="Position" name="Position" placeholder="Job Role" type="text" class="form-control">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="LicNo" class="col-4 col-form-label">License No.</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-id-card"></i>
+												</div>
+											</div> 
+											<input id="LicNo" name="LicNo" placeholder="01234567" type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="LicState" class="col-4 col-form-label">License State</label> 
+									<div class="col-8">
+										<select id="LicState" name="LicState" class="custom-select">
+											<option value="vic">Victoria</option>
+											<option value="nsw">New South Wales</option>
+											<option value="qld">Queensland</option>
+											<option value="sa">South Australia</option>
+											<option value="wa">Western Australia</option>
+											<option value="tas">Tasmania</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="LicType" class="col-4 col-form-label">License Type</label> 
+									<div class="col-8">
+										<select id="LicType[]" name="LicType[]" class="custom-select" multiple="multiple">
+											<option value="C">Car</option>
+											<option value="R">Rider</option>
+											<option value="RE">Restricted Rider</option>
+											<option value="LR">Light Rigid</option>
+											<option value="MR">Medium Rigid</option>
+											<option value="HR">Heavy Rigid</option>
+											<option value="HC">Heavy Combination</option>
+											<option value="MC">Multi-Combination</option>
+										</select>
 									</div>
 								</div> 
-								<input id="PasswordConf" name="PasswordConf" placeholder="Confirm Password" type="text" class="form-control" required="required">
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="form-group row">
-						<label for="FName" class="col-4 col-form-label">First Name</label> 
-						<div class="col-8">
-							<input id="FName" name="FName" placeholder="John" type="text" class="form-control" required="required">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="LName" class="col-4 col-form-label">Last Name</label> 
-						<div class="col-8">
-							<input id="LName" name="LName" placeholder="Connor" type="text" class="form-control" required="required">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="position" class="col-4 col-form-label">Job Position</label> 
-						<div class="col-8">
-							<input id="Position" name="Position" placeholder="Job Role" type="text" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="LicNo" class="col-4 col-form-label">License No.</label> 
-						<div class="col-8">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<i class="fa fa-id-card"></i>
+								<div class="form-group row">
+									<div class="offset-4 col-8">
+										<button name="submit" type="submit" class="btn btn-primary">Create User</button>
+										<button name="reset" type="reset" class="btn btn-danger">Reset</button>
 									</div>
-								</div> 
-								<input id="LicNo" name="LicNo" placeholder="01234567" type="text" class="form-control">
-							</div>
+								</div>
+								<div class="form-group row" id="message"></div>
+							</form>
 						</div>
 					</div>
-					<div class="form-group row">
-						<label for="LicState" class="col-4 col-form-label">License State</label> 
-						<div class="col-8">
-							<select id="LicState" name="LicState" class="custom-select">
-								<option value="vic">Victoria</option>
-								<option value="nsw">New South Wales</option>
-								<option value="qld">Queensland</option>
-								<option value="sa">South Australia</option>
-								<option value="wa">Western Australia</option>
-								<option value="tas">Tasmania</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="LicType" class="col-4 col-form-label">License Type</label> 
-						<div class="col-8">
-							<select id="LicType[]" name="LicType[]" class="custom-select" multiple="multiple">
-								<option value="C">Car</option>
-								<option value="R">Rider</option>
-								<option value="RE">Restricted Rider</option>
-								<option value="LR">Light Rigid</option>
-								<option value="MR">Medium Rigid</option>
-								<option value="HR">Heavy Rigid</option>
-								<option value="HC">Heavy Combination</option>
-								<option value="MC">Multi-Combination</option>
-							</select>
-						</div>
-					</div> 
-					<div class="form-group row">
-						<div class="offset-4 col-8">
-							<button name="submit" type="submit" class="btn btn-primary">Create User</button>
-							<button name="reset" type="reset" class="btn btn-danger">Reset</button>
-						</div>
-					</div>
-					<div class="form-group row" id="message"></div>
-				</form>
-			</div>
 <?PHP
 			break;
 		
@@ -457,161 +459,168 @@ if (isset($_GET["task"])) {
 		$target = $_GET['target'];
 ?>
 					<script type="text/javascript">
-					var userID; // Kinda like a global
-					
-					$(document).ready(function() {
-						// On page load populate target form with target user data
-						$.ajax({
-							url:'<?PHP echo $baseURL; ?>/API/?task=UserModify&opt=fetch&target=<?PHP echo $target; ?>',
-							type:'POST',
-							data: '',
-							success:function(response){
-								var msg = "";
-								var responseData = jQuery.parseJSON(response);
-
-								if (responseData.status == 1) {
-									populateForm(responseData.data);
-								} else {
-									// Error Message
-									$("#message").addClass("text-danger");
-									msg = responseData.message;
-								}
-								$("#message").html(msg);
-							}
-						});
+						var userID; // Kinda like a global
 						
-						// Process form information and submit!
-						// When page is finished loading in browser override default form action
-						$("#modUserForm").submit(function(event){
-							// cancels the form submission
-							event.preventDefault();
-							// instead of default action run javascript function below
-							submitForm("modUserForm"); // Our custom action/function
-						});
-						
-						// The custom form submission function
-						function submitForm(form){
-							if (form == "modUserForm") {
-								var formData = $("#modUserForm").serializeJSON(); // Encode entire form as JSON object
-								$.ajax({
-									url:'<?PHP echo $baseURL; ?>/API/?task=UserModify&opt=update&target=<?PHP echo $target; ?>',
-									type:'POST',
-									data: formData,
-									success:function(response){
-										var msg = "";
-										var responseData = jQuery.parseJSON(response);
+						$(document).ready(function() {
+							// On page load populate target form with target user data
+							fillForm();
+							
+							// Process form information and submit!
+							// When page is finished loading in browser override default form action
+							$("#modUserForm").submit(function(event){
+								// cancels the form submission
+								event.preventDefault();
+								// instead of default action run javascript function below
+								submitForm("modUserForm"); // Our custom action/function
+							});					
+													
+							// The custom form submission function
+							function submitForm(form){
+								if (form == "modUserForm") {
+									var formData = $("#modUserForm").serializeJSON(); // Encode entire form as JSON object
+									$.ajax({
+										url:'<?PHP echo $baseURL; ?>/API/?task=UserModify&opt=update&target=<?PHP echo $target; ?>',
+										type:'POST',
+										data: formData,
+										success:function(response){
+											var msg = "";
+											var responseData = jQuery.parseJSON(response);
 
-										if (responseData.status == 1) {
-											window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
-										} else {
-											// Error Message
-											$("#message").addClass("text-danger");
-											msg = responseData.message;
+											if (responseData.status == 1) {
+												window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=userMod&task=list";
+											} else {
+												// Error Message
+												$("#message").addClass("text-danger");
+												msg = responseData.message;
+											}
+											$("#message").html(msg);
 										}
-										$("#message").html(msg);
-									}
-								});
+									});
+								}
 							}
+						});
+						
+						// Function for populating the form with data from the database
+						function fillForm() {
+							$.ajax({
+								url:'<?PHP echo $baseURL; ?>/API/?task=UserModify&opt=fetch&target=<?PHP echo $target; ?>',
+								type:'POST',
+								data: '',
+								success:function(response){
+									var msg = "";
+									var responseData = jQuery.parseJSON(response);
+
+									if (responseData.status == 1) {
+										populateForm(responseData.data);
+									} else {
+										// Error Message
+										$("#message").addClass("text-danger");
+										msg = responseData.message;
+									}
+									$("#message").html(msg);
+								}
+							});
 						}
-					});
 					</script>
 					
-					<div class="col-6">
-						<form id="modUserForm" name="modUserForm">
-							<div class="form-group row">
-								<label for="email" class="col-4 col-form-label">Email</label> 
-								<div class="col-8">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-at"></i>
-											</div>
-										</div> 
-										<input id="Email" name="Email" placeholder="j.connor@slipstreamdevs.tech" type="text" required="required" class="form-control">
+					<div class="card shadow mb-4" style="width: 50%;">
+						<div class="card-body" >
+							<form id="modUserForm" name="modUserForm" onReset="fillForm();">
+								<div class="form-group row">
+									<label for="email" class="col-4 col-form-label">Email</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-at"></i>
+												</div>
+											</div> 
+											<input id="Email" name="Email" placeholder="j.connor@slipstreamdevs.tech" type="text" required="required" class="form-control">
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Username" class="col-4 col-form-label">Username</label> 
-								<div class="col-8">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-user-circle"></i>
-											</div>
-										</div> 
-										<input id="Username" name="Username" placeholder="Username" type="text" class="form-control" required="required">
+								<div class="form-group row">
+									<label for="Username" class="col-4 col-form-label">Username</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-user-circle"></i>
+												</div>
+											</div> 
+											<input id="Username" name="Username" placeholder="Username" type="text" class="form-control" required="required">
+										</div>
 									</div>
 								</div>
-							</div>
-							<hr>
-							<div class="form-group row">
-								<label for="FName" class="col-4 col-form-label">First Name</label> 
-								<div class="col-8">
-									<input id="FName" name="FName" placeholder="John" type="text" class="form-control" required="required">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="LName" class="col-4 col-form-label">Last Name</label> 
-								<div class="col-8">
-									<input id="LName" name="LName" placeholder="Connor" type="text" class="form-control" required="required">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="position" class="col-4 col-form-label">Job Position</label> 
-								<div class="col-8">
-									<input id="Position" name="Position" placeholder="Job Role" type="text" class="form-control">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="LicNo" class="col-4 col-form-label">License No.</label> 
-								<div class="col-8">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-id-card"></i>
-											</div>
-										</div> 
-										<input id="LicNo" name="LicNo" placeholder="01234567" type="text" class="form-control">
+								<hr>
+								<div class="form-group row">
+									<label for="FName" class="col-4 col-form-label">First Name</label> 
+									<div class="col-8">
+										<input id="FName" name="FName" placeholder="John" type="text" class="form-control" required="required">
 									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label for="LicState" class="col-4 col-form-label">License State</label> 
-								<div class="col-8">
-									<select id="LicState" name="LicState" class="custom-select">
-										<option value="vic">Victoria</option>
-										<option value="nsw">New South Wales</option>
-										<option value="qld">Queensland</option>
-										<option value="sa">South Australia</option>
-										<option value="wa">Western Australia</option>
-										<option value="tas">Tasmania</option>
-									</select>
+								<div class="form-group row">
+									<label for="LName" class="col-4 col-form-label">Last Name</label> 
+									<div class="col-8">
+										<input id="LName" name="LName" placeholder="Connor" type="text" class="form-control" required="required">
+									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label for="LicType" class="col-4 col-form-label">License Type</label> 
-								<div class="col-8">
-									<select id="LicType[]" name="LicType[]" class="custom-select" multiple="multiple">
-										<option value="C">Car</option>
-										<option value="R">Rider</option>
-										<option value="RE">Restricted Rider</option>
-										<option value="LR">Light Rigid</option>
-										<option value="MR">Medium Rigid</option>
-										<option value="HR">Heavy Rigid</option>
-										<option value="HC">Heavy Combination</option>
-										<option value="MC">Multi-Combination</option>
-									</select>
+								<div class="form-group row">
+									<label for="position" class="col-4 col-form-label">Job Position</label> 
+									<div class="col-8">
+										<input id="Position" name="Position" placeholder="Job Role" type="text" class="form-control">
+									</div>
 								</div>
-							</div> 
-							<div class="form-group row">
-								<div class="offset-4 col-8">
-									<button name="submit" type="submit" class="btn btn-primary">Update User</button>
-									<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+								<div class="form-group row">
+									<label for="LicNo" class="col-4 col-form-label">License No.</label> 
+									<div class="col-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fa fa-id-card"></i>
+												</div>
+											</div> 
+											<input id="LicNo" name="LicNo" placeholder="01234567" type="text" class="form-control">
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="form-group row" id="message"></div>
-						</form>
+								<div class="form-group row">
+									<label for="LicState" class="col-4 col-form-label">License State</label> 
+									<div class="col-8">
+										<select id="LicState" name="LicState" class="custom-select">
+											<option value="vic">Victoria</option>
+											<option value="nsw">New South Wales</option>
+											<option value="qld">Queensland</option>
+											<option value="sa">South Australia</option>
+											<option value="wa">Western Australia</option>
+											<option value="tas">Tasmania</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="LicType" class="col-4 col-form-label">License Type</label> 
+									<div class="col-8">
+										<select id="LicType[]" name="LicType[]" class="custom-select" multiple="multiple">
+											<option value="C">Car</option>
+											<option value="R">Rider</option>
+											<option value="RE">Restricted Rider</option>
+											<option value="LR">Light Rigid</option>
+											<option value="MR">Medium Rigid</option>
+											<option value="HR">Heavy Rigid</option>
+											<option value="HC">Heavy Combination</option>
+											<option value="MC">Multi-Combination</option>
+										</select>
+									</div>
+								</div> 
+								<div class="form-group row">
+									<div class="offset-4 col-8">
+										<button name="submit" type="submit" class="btn btn-primary">Update User</button>
+										<button name="reset" type="reset" class="btn btn-danger">Reset</button>
+									</div>
+								</div>
+								<div class="form-group row" id="message"></div>
+							</form>
+						</div>
 					</div>
 <?PHP
 			break;
