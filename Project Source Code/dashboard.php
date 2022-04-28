@@ -111,8 +111,7 @@ if (isset($_GET["logout"])) { //Set but Empty
 
 			<!-- ADMIN Nav Item - Group Controls -->
 			<li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Group Controls</span>
                 </a>
@@ -124,7 +123,36 @@ if (isset($_GET["logout"])) { //Set but Empty
                     </div>
                 </div>
             </li>
-			
+
+			<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-truck"></i>
+                    <span>Asset Controls</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        
+                        <a class="collapse-item" href="?module=assetMod&task=list">List Assets</a>
+                        <a class="collapse-item" href="?module=assetMod&task=create">Add Asset</a>
+                    </div>
+                </div>
+            </li>
+
+			<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                    <i class="fas fa-fw fa-clipboard-list"></i>
+                    <span>Tickets</span>
+                </a>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        
+                        <a class="collapse-item" href="?module=ticketMod&task=list&opt=user">My Tickets</a>
+                        <a class="collapse-item" href="?module=ticketMod&task=list&opt=all">List Tickets</a>
+						<a class="collapse-item" href="?module=ticketMod&task=create">Create Ticket</a>
+                    </div>
+                </div>
+            </li>
+						
             <li class="nav-item">
                 <a class="nav-link" href="?module=adminControl">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -143,35 +171,38 @@ if (isset($_GET["logout"])) { //Set but Empty
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Reports</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <h6 class="collapse-header">Tickets:</h6>
+                        <a class="collapse-item" href="#">Report 1</a>
+                        <a class="collapse-item" href="#">Report 2</a>
+                        <a class="collapse-item" href="#">Report 3</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Assets:</h6>
+                        <a class="collapse-item" href="#">Report 1</a>
+                        <a class="collapse-item" href="#">Report 2</a>
+                        <h6 class="collapse-header">Financial:</h6>
+                        <a class="collapse-item" href="#">Report 1</a>
+                        <a class="collapse-item" href="#">Report 2</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-dollar-sign"></i>
+                    <span>Expenses &amp; Income</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Someother Addon</span></a>
             </li>
 
             <!-- Divider -->
