@@ -52,6 +52,10 @@ if (isset($_GET["logout"])) { //Set but Empty
     <!-- Custom styles for this template-->
 	<link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+	
+	<!-- boostrap duallistbox -->
+	<link href="vendor/boostrap-duallistbox/bootstrap-duallistbox.css" rel="stylesheet">
+	<script src="vendor/boostrap-duallistbox/jquery.bootstrap-duallistbox.js"></script>	
 
 </head>
 

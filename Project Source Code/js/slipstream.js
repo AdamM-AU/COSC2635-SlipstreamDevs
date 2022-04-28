@@ -62,7 +62,8 @@ function populateForm(data) {
 		else {
 			switch($ctrl.attr("type")) {  
 				case "text" :   case "hidden":  case "textarea":  
-					$ctrl.val(value);   
+					$ctrl.val(value);
+					console.log(value);
 					break;   
 				case "radio" : case "checkbox":   
 					$ctrl.each(function(){
