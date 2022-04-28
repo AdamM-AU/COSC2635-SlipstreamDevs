@@ -467,12 +467,11 @@ switch ($ReqTask) {
 		die();
 	
 	case "GroupModify":
-		// UPDATE UserGroups SET GroupDescription=?, Location=?, Manager=?, Supervisor=? WHERE GroupID=?
 		if(isset($_GET['opt']) && !empty($_GET['opt'])) {
 			$opt = $_GET['opt'];
 			
 			switch ($opt) {
-				// Fetch Current UserData
+				// Fetch Current UserGroup Data
 				case "fetch" :
 					if(isset($_GET['target']) && !empty($_GET['target'])) {
 						$target = $_GET['target'];
@@ -481,7 +480,7 @@ switch ($ReqTask) {
 						$query->execute([ $target ]);
 						$result = $query->fetch();
 						
-						// Does the user exist?
+						// Does the group exist?
 						if ($result != NULL) {
 							$processed = array( "Name" => $result['GroupName'], // Group Name
 												"Desc" => $result['GroupDescription'], // Group Description
@@ -493,42 +492,36 @@ switch ($ReqTask) {
 							print json_encode($response, JSON_PRETTY_PRINT);
 							die();
 						} else {
-							$response = array("status" => 0, "message" => "ERROR: 1User not found!");
+							$response = array("status" => 0, "message" => "ERROR: Group not found!");
 							print json_encode($response, JSON_PRETTY_PRINT);
 							die();
 						}
 					} else {
-						$response = array("status" => 0, "message" => "ERROR: 2User not found!");
+						$response = array("status" => 0, "message" => "ERROR: Group not found!");
 						print json_encode($response, JSON_PRETTY_PRINT);
 						die();
 					}
 					
-				// Update UserData
+				// Update GroupData
 				case "update" :
 					if(isset($_GET['target']) && !empty($_GET['target'])) {
 						$target = $_GET['target'];
 						
 						// Check user exists in database
-						$query = $pdo->prepare('SELECT Username FROM Users WHERE UserID=?');
+						$query = $pdo->prepare('SELECT GroupName FROM UserGroups WHERE GroupID=?');
 						$query->execute([ $target ]);
 						$result = $query->fetch();
 						
 						// Does the user exist?
 						if ($result != NULL) {
-							$Email = $_POST['Email']; // Email address
-							$Username = $_POST['Username']; // Username
-							$FName = $_POST['FName']; // First Name
-							$LName = $_POST['LName']; // Last Name
-							$Position = $_POST['Position']; // Job Role
-							$LicNo = $_POST['LicNo']; // License Number
+							$GroupName = $_POST['Name']; // Group Name
+							$GroupDesc = $_POST['Desc']; // Group Description
+							$GroupLocation = $_POST['Location']; // Group Location
+							$GroupManager = $_POST['Manager']; // Group's Manager UserID
+							$GroupSupervisor = $_POST['Supervisor']; // Group's Supervisor UserID
 							
-							$LicState = strtoupper($_POST['LicState']); // License Issuing State + convert to all uppercase
-							
-							$LicType = $_POST['LicType']; // License Types (array)
-							$LicType = json_encode($LicType); // Convert to JSON array to store in SQLlite
-							
-							$query = $pdo->prepare('UPDATE Users SET Email=?, Username=?, Position=?, FirstName=?, LastName=?, LicenseNumber=?, LicenseState=?, LicenseType=? WHERE UserID=?');
-							$query->execute([ $Email, $Username, $Position, $FName, $LName, $LicNo, $LicState, $LicType, $target ]);
+							$query = $pdo->prepare('UPDATE UserGroups SET GroupName=?, GroupDescription=?, Location=?, Manager=?, Supervisor=? WHERE GroupID=?');
+							$query->execute([ $GroupName, $GroupDesc, $GroupLocation, $GroupManager, $GroupSupervisor, $target ]);
 							$response = array("status" => 1, "message" => "");
 						} else {
 							$response = array("status" => 0, "message" => "ERROR: User not found!");

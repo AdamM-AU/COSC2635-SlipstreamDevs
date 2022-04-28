@@ -373,7 +373,7 @@ if (isset($_GET["task"])) {
 					</script>
 
 					<div class="col-4">
-						<form id="createGroupForm">
+						<form id="modGroupForm">
 							<div class="form-group row">
 								<label for="Name" class="col-4 col-form-label">Group Name</label> 
 								<div class="col-8">
