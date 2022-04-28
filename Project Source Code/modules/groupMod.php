@@ -56,8 +56,8 @@ if (isset($_GET["task"])) {
 			<script type="text/javascript">
 				// Adam: Lets use the API to fill the drop down selections ;) 
 				$(document).ready(function() {
-					var dropdownManager = $('#manager');
-					var dropdownSupervisor = $('#supervisor');
+					var dropdownManager = $('#Manager');
+					var dropdownSupervisor = $('#Supervisor');
 					
 					dropdownManager.empty(); 	// Flush all values
 					dropdownSupervisor.empty(); // Flush all values
@@ -144,7 +144,7 @@ if (isset($_GET["task"])) {
 					<div class="form-group row">
 						<label for="manager" class="col-4 col-form-label">Manager</label> 
 						<div class="col-8">
-							<select id="manager" name="manager" class="custom-select" required="required">
+							<select id="Manager" name="Manager" class="custom-select" required="required">
 								<option value="1">USERNAME (Lname + FName)</option>
 							</select>
 						</div>
@@ -152,7 +152,7 @@ if (isset($_GET["task"])) {
 					<div class="form-group row">
 						<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
 						<div class="col-8">
-							<select id="supervisor" name="supervisor" class="custom-select">
+							<select id="Supervisor" name="Supervisor" class="custom-select">
 								<option value="rabbit">USERNAME (LNAME, FNAME)</option>
 							</select>
 						</div>
@@ -314,26 +314,26 @@ if (isset($_GET["task"])) {
 									dropdownManager.append($('<option></option>').attr('value', entry.id).text(entry.text));
 									dropdownSupervisor.append($('<option></option>').attr('value', entry.id).text(entry.text));
 								})
-							});
-							
-							// On page load populate target form with target user data
-							$.ajax({
-								url:'<?PHP echo $baseURL; ?>/API/?task=GroupModify&opt=fetch&target=<?PHP echo $target; ?>',
-								type:'POST',
-								data: '',
-								success:function(response){
-									var msg = "";
-									var responseData = jQuery.parseJSON(response);
+								
+								// Now that the drop downs have been populated, lets populate target form with target user data
+								$.ajax({
+									url:'<?PHP echo $baseURL; ?>/API/?task=GroupModify&opt=fetch&target=<?PHP echo $target; ?>',
+									type:'POST',
+									data: '',
+									success:function(response){
+										var msg = "";
+										var responseData = jQuery.parseJSON(response);
 
-									if (responseData.status == 1) {
-										populateForm(responseData.data);
-									} else {
-										// Error Message
-										$("#message").addClass("text-danger");
-										msg = responseData.message;
+										if (responseData.status == 1) {
+											populateForm(responseData.data);
+										} else {
+											// Error Message
+											$("#message").addClass("text-danger");
+											msg = responseData.message;
+										}
+										$("#message").html(msg);
 									}
-									$("#message").html(msg);
-								}
+								});
 							});
 							
 							// Process form information and submit!
