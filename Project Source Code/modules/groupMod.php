@@ -412,7 +412,7 @@ if (isset($_GET["task"])) {
 									<label for="manager" class="col-4 col-form-label">Manager</label> 
 									<div class="col-8">
 										<select id="Manager" name="Manager" class="custom-select" required="required">
-											<option value="1">USERNAME (Lname + FName)</option>
+											<option value="0">USERNAME (Lname + FName)</option>
 										</select>
 									</div>
 								</div>
@@ -420,7 +420,7 @@ if (isset($_GET["task"])) {
 									<label for="supervisor" class="col-4 col-form-label">Supervisor</label> 
 									<div class="col-8">
 										<select id="Supervisor" name="Supervisor" class="custom-select">
-											<option value="rabbit">USERNAME (LNAME, FNAME)</option>
+											<option value="0">USERNAME (LNAME, FNAME)</option>
 										</select>
 									</div>
 								</div> 
@@ -458,19 +458,11 @@ if (isset($_GET["task"])) {
 					</script>
 					<div class="card shadow mb-4" style="width: 50%;">
 						<div class="card-body">
-							<h5>SomeGroup Name [VERY DIRTY!!! and incomplete]</h5>
+							<h5 id="GroupName">Loading...</h5>
 							<form id="demoform" action="#" method="post">
 								<select multiple="multiple" size="10" name="duallistbox_demo1[]">
-									<option value="option1">User 1</option>
-									<option value="option2">User 2</option>
-									<option value="option3" selected="selected">User 3</option>
-									<option value="option4">User 4</option>
-									<option value="option5">User 5</option>
-									<option value="option6" selected="selected">User 6</option>
-									<option value="option7">User 7</option>
-									<option value="option8">User 8</option>
-									<option value="option9">User 9</option>
-									<option value="option0">User 10</option>
+									<option value="0">Loading...</option>
+									<option value="option6" selected="selected">Loading...</option>
 								</select>
 								<br>
 								<button name="submit" type="submit" class="btn btn-primary">Submit</button>
