@@ -582,7 +582,7 @@ switch ($ReqTask) {
 						// Create holding array
 						$processed2 = array();
 
-						foreach ($result as $row) {			
+						foreach ($result as $row) {
 							// Build Array Entry
 							$text = $row['Username'] . ' (' . $row['LastName'] . ', ' . $row['FirstName'] . ')';
 							$arrayEntry = array("id" => $row['UserID'], "text" => $text);
@@ -593,14 +593,48 @@ switch ($ReqTask) {
 						print json_encode($response, JSON_PRETTY_PRINT);
 						die();
 						
+					case "update":
+						// DELETE ALL MEMBER MAPS EXCEPT Manager/Supervisor!
+						// ADD ALL MEMBER MAPS EXCEPT Manager/Supervisor
+						$target = $_GET['target'];
+						$userMap = $_POST['userSelection'];
+						
+						$query = $pdo->prepare('SELECT Manager, Supervisor FROM UserGroups WHERE GroupID=?');
+						$query->execute([ $target ]);
+						$result = $query->fetchAll(PDO::FETCH_NUM);	
+						
+						// We will use this to remove them from the data to be processed for deletion or addition to the group
+						$ManagerSupervisor = $result[0];
+						$ManagerSupervisor = array_unique($ManagerSupervisor);
+						
+						// Sanitised User MAP
+						$userMap = array_unique($userMap); // Remove Duplicates
+						$userMap = array_diff($userMap, $ManagerSupervisor); // Remove any user from usermap array that also exists in ManagerSupervisor array
+						
+						// Delete everyone but manager and supervisor from database
+						$query = $pdo->prepare('DELETE FROM UserGroupMapping WHERE UserID NOT IN (SELECT Manager FROM UserGroups WHERE GroupID=?) AND UserID NOT IN (SELECT Supervisor FROM UserGroups WHERE GroupID=?) AND UserGroupMapping.GroupID=?');
+						$query->execute([ $target, $target, $target ]);
+						
+						// Proccess the changes to the database
+						foreach ($userMap as $user) {
+							$query = $pdo->prepare('INSERT INTO UserGroupMapping (UserID, GroupID) VALUES (?, ?)');
+							$query->execute([ $user, $target ]);
+						}
+
+						print json_encode(array("status" => 1, "message" => ""), JSON_PRETTY_PRINT);
+						die();
+					
 					default:
-						die();	
+						print json_encode(array("status" => 0, "message" => "ERROR: Task not found!"), JSON_PRETTY_PRINT);
+						die();
 				}
 			} else {
+				print json_encode(array("status" => 0, "message" => "ERROR: Option Not Found!"), JSON_PRETTY_PRINT);
 				die();
 			}
 			
 		} else {
+			print json_encode(array("status" => 0, "message" => "ERROR: Group Not Found!"), JSON_PRETTY_PRINT);
 			die();
 		}
 		

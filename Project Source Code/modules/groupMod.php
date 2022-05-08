@@ -457,7 +457,15 @@ if (isset($_GET["task"])) {
 								btnMoveAllText: 'Add All &gt;&gt;',
 								btnRemoveAllText: '&lt;&lt; Remove All'
 							});
-
+							
+							// Process form information and submit!
+							// When page is finished loading in browser override default form action
+							$("#groupUsers").submit(function(event){
+								// cancels the form submission
+								event.preventDefault();
+								// instead of default action run javascript function below
+								submitForm("groupUsers"); // Our custom action/function
+							});
 						});
 						
 						function fillForm() {
@@ -488,7 +496,31 @@ if (isset($_GET["task"])) {
 								dualList.bootstrapDualListbox('refresh', true);
 							});
 						}
-								
+							
+						// The custom form submission function
+						function submitForm(form){
+							if (form == "groupUsers") {
+								var formData = $("#groupUsers").serializeJSON(); // Encode entire form as JSON object
+								$.ajax({
+									url:'<?PHP echo $baseURL; ?>/API/?task=GroupMembers&opt=update&target=<?PHP echo $_GET['target']; ?>',
+									type:'POST',
+									data: formData,
+									success:function(response){
+										var msg = "";
+										var responseData = jQuery.parseJSON(response);
+
+										if (responseData.status == 1) {
+											window.location.href = "<?PHP echo $baseURL; ?>/dashboard.php?module=groupMod&task=list";
+										} else {
+											// Error Message
+											$("#message").addClass("text-danger");
+											msg = responseData.message;
+										}
+										$("#message").html(msg);
+									}
+								});
+							}
+						}								
 					</script>
 					<div class="card shadow mb-4" style="width: 50%;">
 						<div class="card-body">
@@ -499,7 +531,7 @@ if (isset($_GET["task"])) {
 									<option value="option6" selected="selected">Loading...</option>
 								</select>
 								<br>
-								<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+								<button name="submit" type="submit" class="btn btn-primary">Submit Changes</button>
 								<button name="reset" type="reset" class="btn btn-danger">Reset</button>
 							</form>
 						</div>
