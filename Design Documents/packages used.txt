@@ -4,7 +4,11 @@ The following external packages are in use:
 - PHP (7.3.33)
 - Composer (A Dependency Manager for PHP) ---> https://getcomposer.org/
 - SQLite 3 (PHP Driver: 3.7.17)
+
 - jQuery (3.6.0) ---> https://jquery.com
 - Boostrap (v4.1.3) ---> https://getbootstrap.com/docs/4.1/getting-started/introduction/
 - Font Awesome Free (6.1.0) ---> https://fontawesome.com/
+- DataTables - https://datatables.net/
+- Bootstrap Dual Listbox - https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox
+- ChartJS - https://www.chartjs.org/
 ... More to come....

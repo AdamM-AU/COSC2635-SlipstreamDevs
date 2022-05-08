@@ -1,4 +1,0 @@
-
-<p>&nbsp;</p>
-<hr />
-<a href="dashboard.php">Home</a> | <a href="dashboard.php?module=userMod">User Management</a> | <a href="dashboard.php?module=groupMod">Group Management</a> | <a href="dashboard.php?logout">Logout!</a>

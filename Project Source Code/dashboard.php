@@ -38,12 +38,14 @@ if (isset($_GET["logout"])) { //Set but Empty
     <meta name="author" content="">
 
     <title>Heavy Vehicle Management :: Dashboard</title>
-    <!-- jQuery JS -->
+	
+	<!-- jQuery JS -->
     <script src="vendor/components/jquery/jquery.min.js"></script>
-
-    <!-- Our Custom JS -->
-    <script src="js/slipstream.js"></script>
-
+    <script src="vendor/jquery.serializejson.min.js"></script>
+	
+	<!-- Our Custom JS -->
+	<script src="js/slipstream.js"></script>
+	
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="vendor/components/font-awesome/css/all.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -51,6 +53,10 @@ if (isset($_GET["logout"])) { //Set but Empty
     <!-- Custom styles for this template-->
     <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+	
+	<!-- boostrap duallistbox -->
+	<link href="vendor/boostrap-duallistbox/bootstrap-duallistbox.css" rel="stylesheet">
+	<script src="vendor/boostrap-duallistbox/jquery.bootstrap-duallistbox.js"></script>	
 
 </head>
 
@@ -172,8 +178,7 @@ if (isset($_GET["logout"])) { //Set but Empty
 
                         <a class="collapse-item" href="?module=userMod&task=list">List Users</a>
                         <a class="collapse-item" href="?module=userMod&task=create">Add User</a>
-                        <a class="collapse-item" href="?module=userMod&task=delete">Delete Users</a>
-                        <a class="collapse-item" href="?module=userMod&task=modify">Modify Users</a>
+                        
                     </div>
                 </div>
             </li>
@@ -189,8 +194,6 @@ if (isset($_GET["logout"])) { //Set but Empty
 
                         <a class="collapse-item" href="?module=groupMod&task=list">List Groups</a>
                         <a class="collapse-item" href="?module=groupMod&task=create">Add Group</a>
-                        <a class="collapse-item" href="?module=groupMod&task=delete">Delete Group</a>
-                        <a class="collapse-item" href="?module=groupMod&task=modify">Modify Group</a>
                     </div>
                 </div>
             </li>
@@ -202,30 +205,33 @@ if (isset($_GET["logout"])) { //Set but Empty
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <h6 class="collapse-header">Tickets:</h6>
+                        <a class="collapse-item" href="#">Report 1</a>
+                        <a class="collapse-item" href="#">Report 2</a>
+                        <a class="collapse-item" href="#">Report 3</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Assets:</h6>
+                        <a class="collapse-item" href="#">Report 1</a>
+                        <a class="collapse-item" href="#">Report 2</a>
+                        <h6 class="collapse-header">Financial:</h6>
+                        <a class="collapse-item" href="#">Report 1</a>
+                        <a class="collapse-item" href="#">Report 2</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-dollar-sign"></i>
+                    <span>Expenses &amp; Income</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Someother Addon</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="?module=adminControl">
