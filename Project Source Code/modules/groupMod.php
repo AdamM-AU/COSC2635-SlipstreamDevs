@@ -479,8 +479,11 @@ if (isset($_GET["task"])) {
 							var url = '<?PHP echo $baseURL; ?>/API/?task=GroupMembers&target=' + groupID +'&opt=selection'
 							
 							$.getJSON(url, function (data) {
-								// Set Table Name
+								// Set GroupName
 								$('#GroupName').html(data["GroupName"]);
+								
+								// Set Group Description
+								$('#GroupDesc').html(data["GroupDesc"]);
 								
 								// Process Non Members
 								$.each(data["nonMembers"], function (key, entry) {
@@ -525,6 +528,8 @@ if (isset($_GET["task"])) {
 					<div class="card shadow mb-4" style="width: 50%;">
 						<div class="card-body">
 							<h5 id="GroupName">Loading...</h5>
+							<sup id="GroupDesc">Loading...</sup>
+							<br />&nbsp;
 							<form id="groupUsers" name="groupUsers" action="#" method="post">
 								<select id="userSelection" multiple="multiple" size="10" name="userSelection[]">
 									<option value="0">Loading...</option>

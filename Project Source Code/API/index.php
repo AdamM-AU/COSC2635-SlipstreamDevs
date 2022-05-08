@@ -552,10 +552,11 @@ switch ($ReqTask) {
 				switch ($option) {
 					case "selection":
 						// Get Group Name
-						$query = $pdo->prepare('SELECT GroupName FROM UserGroups WHERE GroupID=?');
+						$query = $pdo->prepare('SELECT GroupName, GroupDescription FROM UserGroups WHERE GroupID=?');
 						$query->execute([ $target ]);
 						$result = $query->fetch();
 						$GroupName = $result['GroupName'];
+						$GroupDesc = $result['GroupDescription'];
 
 						// Members
 						$query = $pdo->prepare('SELECT UserGroupMapping.UserID, Users.FirstName, Users.LastName, Users.Username FROM UserGroupMapping INNER JOIN Users ON UserGroupMapping.UserID = Users.UserID WHERE UserGroupMapping.GroupID=?');
@@ -588,7 +589,7 @@ switch ($ReqTask) {
 							$arrayEntry = array("id" => $row['UserID'], "text" => $text);
 							$processed2[] = $arrayEntry; // Add date to processed array
 						}
-						$response = array("GroupName" => $GroupName, "nonMembers" => $processed2, "members" => $processed1,);
+						$response = array("GroupName" => $GroupName, "GroupDesc" => $GroupDesc, "nonMembers" => $processed2, "members" => $processed1,);
 						
 						print json_encode($response, JSON_PRETTY_PRINT);
 						die();
