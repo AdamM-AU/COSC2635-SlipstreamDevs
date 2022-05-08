@@ -102,10 +102,20 @@ if (isset($_GET["logout"])) { //Set but Empty
                     <span>Driver</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="?module=vehicleMod&task=list">
+                <a class="nav-link" href="?module=vehicleMod&task=list" data-toggle="collapse" data-target="#vehicleControls" aria-expanded="true" aria-controls="vehicleControls">
                     <i class="fas fa-fw fa-car"></i>
                     <span>Vehicle</span></a>
+                    <div id="vehicleControls" class="collapse" aria-labelledby="vehicleControls" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <a class="collapse-item" href="?module=vehicle&Mod&task=list">List Vehicles</a>
+                        <a class="collapse-item" href="?module=vehicle&task=create">Add Vehicle</a>
+                        <a class="collapse-item" href="?module=vehicle&task=delete">Delete Vehicles</a>
+                        <a class="collapse-item" href="?module=vehicle&task=modify">Modify Vehicles</a>
+                    </div>
+                </div>
             </li>
+           
             <li class="nav-item">
                 <a class="nav-link" href="?module=trip">
                     <i class="fas fa-fw fa-road"></i>
