@@ -530,7 +530,7 @@ if (isset($_GET["task"])) {
 							<h5 id="GroupName">Loading...</h5>
 							<sup id="GroupDesc">Loading...</sup>
 							<br />&nbsp;
-							<form id="groupUsers" name="groupUsers" action="#" method="post">
+							<form id="groupUsers" name="groupUsers" action="#" method="post" onReset="fillForm();">
 								<select id="userSelection" multiple="multiple" size="10" name="userSelection[]">
 									<option value="0">Loading...</option>
 									<option value="option6" selected="selected">Loading...</option>
