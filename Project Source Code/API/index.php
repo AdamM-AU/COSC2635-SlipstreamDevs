@@ -543,9 +543,66 @@ switch ($ReqTask) {
 	
 	// Group Management - Group Add/Remove Memberss
 	case "GroupMembers":
-		// INSERT INTO UserGroupMapping (UserID, GroupID) VALUES (?,?);
-		echo "Group Management - Add/Remove Group Member";
-		die();
+		if(isset($_GET['target']) && !empty($_GET['target'])) {
+			$target = $_GET['target'];
+			
+			if(isset($_GET['opt']) && !empty($_GET['opt'])) {
+				$option = $_GET['opt'];
+			
+				switch ($option) {
+					case "selection":
+						// Get Group Name
+						$query = $pdo->prepare('SELECT GroupName FROM UserGroups WHERE GroupID=?');
+						$query->execute([ $target ]);
+						$result = $query->fetch();
+						$GroupName = $result['GroupName'];
+
+						// Members
+						$query = $pdo->prepare('SELECT UserGroupMapping.UserID, Users.FirstName, Users.LastName, Users.Username FROM UserGroupMapping INNER JOIN Users ON UserGroupMapping.UserID = Users.UserID WHERE UserGroupMapping.GroupID=?');
+						$query->execute([ $target ]);
+						$result = $query->fetchAll();
+						
+						// Create holding array
+						$processed1 = array();
+
+						foreach ($result as $row) {			
+							// Build Array Entry
+							$text = $row['Username'] . ' (' . $row['LastName'] . ', ' . $row['FirstName'] . ')';
+							$arrayEntry = array("id" => $row['UserID'], "text" => $text);
+							$processed1[] = $arrayEntry; // Add date to processed array
+						}
+						
+						$response[] = array("members" => $processed);
+						
+						// Non Members
+						$query = $pdo->prepare('SELECT Users.UserID, Users.Username, Users.FirstName, Users.LastName FROM Users LEFT JOIN ( SELECT UserID, GroupID FROM UserGroupMapping WHERE GroupID=? ) AS Q1 ON Users.UserID = Q1.UserID WHERE Q1.UserID IS NULL;');
+						$query->execute([ $target ]);
+						$result = $query->fetchAll();				
+
+						// Create holding array
+						$processed2 = array();
+
+						foreach ($result as $row) {			
+							// Build Array Entry
+							$text = $row['Username'] . ' (' . $row['LastName'] . ', ' . $row['FirstName'] . ')';
+							$arrayEntry = array("id" => $row['UserID'], "text" => $text);
+							$processed2[] = $arrayEntry; // Add date to processed array
+						}
+						$response = array("GroupName" => $GroupName, "nonMembers" => $processed2, "members" => $processed1,);
+						
+						print json_encode($response, JSON_PRETTY_PRINT);
+						die();
+						
+					default:
+						die();	
+				}
+			} else {
+				die();
+			}
+			
+		} else {
+			die();
+		}
 		
 	// ----- END OF DEFINED TASKS ----- //
 		

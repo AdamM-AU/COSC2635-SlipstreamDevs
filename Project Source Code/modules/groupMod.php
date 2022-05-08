@@ -440,9 +440,12 @@ if (isset($_GET["task"])) {
 		case "memberControl":
 ?>
 					<script type="text/javascript">
-						var groupID; // Kinda like a global
+						var groupID = <?PHP echo $_GET['target']; ?>; // Kinda like a global
+						var dualList = $('select[name="userSelection[]"]')
 						$(document).ready(function() {
-							var dualList = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+							
+							fillForm();
+							dualList = $('select[name="userSelection[]"]').bootstrapDualListbox({
 								nonSelectedListLabel: 'Non-Members',
 								selectedListLabel: 'Members',
 								moveAllLabel: 'Add All',
@@ -454,13 +457,44 @@ if (isset($_GET["task"])) {
 								btnMoveAllText: 'Add All &gt;&gt;',
 								btnRemoveAllText: '&lt;&lt; Remove All'
 							});
+
 						});
+						
+						function fillForm() {
+							// Auto Fill UserSelection menu
+							var dropdownUserSelection = $('#userSelection');
+							
+							dropdownUserSelection.empty(); // Flush all values
+							
+							// Fetch non active members
+							// JSON Request no ajax this time.. we work or fail
+							var url = '<?PHP echo $baseURL; ?>/API/?task=GroupMembers&target=' + groupID +'&opt=selection'
+							
+							$.getJSON(url, function (data) {
+								// Set Table Name
+								$('#GroupName').html(data["GroupName"]);
+								
+								// Process Non Members
+								$.each(data["nonMembers"], function (key, entry) {
+									dropdownUserSelection.append($('<option></option>').attr('value', entry.id).text(entry.text));
+								})
+								
+								// Process Members
+								$.each(data["members"], function (key, entry) {
+									dropdownUserSelection.append($('<option></option>').attr('value', entry.id).attr('selected', 'true').text(entry.text));
+								})								
+			
+								// Refresh Table
+								dualList.bootstrapDualListbox('refresh', true);
+							});
+						}
+								
 					</script>
 					<div class="card shadow mb-4" style="width: 50%;">
 						<div class="card-body">
 							<h5 id="GroupName">Loading...</h5>
-							<form id="demoform" action="#" method="post">
-								<select multiple="multiple" size="10" name="duallistbox_demo1[]">
+							<form id="groupUsers" name="groupUsers" action="#" method="post">
+								<select id="userSelection" multiple="multiple" size="10" name="userSelection[]">
 									<option value="0">Loading...</option>
 									<option value="option6" selected="selected">Loading...</option>
 								</select>
