@@ -14,9 +14,19 @@ if (isset($_GET["task"])) {
 				// Put Code for this task, basically HTML
 ?>
  <!-- HTML GOES HERE -->
- 					<div class="card shadow mb-4" style="width: 40%;">
-						<div class="card-body" >
-							<pre>LIST ALL ASSETS</pre>
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Task Heading</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+									<pre>LIST ALL ASSETS</pre>
+							</div>
 						</div>
 					</div>
 
@@ -27,9 +37,19 @@ if (isset($_GET["task"])) {
 				// Put Code for this task, basically HTML
 ?>
  <!-- HTML GOES HERE -->
- 					<div class="card shadow mb-4" style="width: 40%;">
-						<div class="card-body" >
-							<pre>CREATE AN ASSET</pre>
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Task Heading</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+									<pre>CREATE ASSETS</pre>
+							</div>
 						</div>
 					</div>
  
