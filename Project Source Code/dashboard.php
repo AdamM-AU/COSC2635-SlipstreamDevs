@@ -441,7 +441,12 @@ if(isset($_GET['module'])) {
 	// Asset Module
 	case 'assetMod':
 		require('modules/assetMod.php');
-		break;		
+		break;
+		
+	// Ticket Module
+	case 'ticketMod':
+		require('modules/ticketMod.php');
+		break;			
 	
 	default:
 		// Adam - Just another hidden Gem :D
