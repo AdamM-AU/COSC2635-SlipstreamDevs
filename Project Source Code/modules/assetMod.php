@@ -14,7 +14,11 @@ if (isset($_GET["task"])) {
 				// Put Code for this task, basically HTML
 ?>
  <!-- HTML GOES HERE -->
- <pre>LIST ALL ASSETS</pre>
+ 					<div class="card shadow mb-4" style="width: 40%;">
+						<div class="card-body" >
+							<pre>LIST ALL ASSETS</pre>
+						</div>
+					</div>
 
 <?PHP
 			break;
@@ -23,7 +27,11 @@ if (isset($_GET["task"])) {
 				// Put Code for this task, basically HTML
 ?>
  <!-- HTML GOES HERE -->
- <pre>CREATE AN ASSET</pre>
+ 					<div class="card shadow mb-4" style="width: 40%;">
+						<div class="card-body" >
+							<pre>CREATE AN ASSET</pre>
+						</div>
+					</div>
  
 <?PHP 
 			break;
