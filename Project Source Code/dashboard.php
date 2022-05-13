@@ -131,7 +131,6 @@ if (isset($_GET["logout"])) { //Set but Empty
                 </a>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        
                         <a class="collapse-item" href="?module=assetMod&task=list">List Assets</a>
                         <a class="collapse-item" href="?module=assetMod&task=create">Add Asset</a>
                     </div>
