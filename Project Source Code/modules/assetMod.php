@@ -22,8 +22,10 @@ if (isset($_GET["task"])) {
                     <!-- Content Row -->
                     <div class="row">
 						<div class="card shadow mb-4" style="width: 100%;">
-							<div class="card-body" >
+							<div class="card-body">
+							<!--- EDIT IN THIS SECTION --->
 									<pre>LIST ALL ASSETS</pre>
+									<!--- END - EDIT IN THIS SECTION --->
 							</div>
 						</div>
 					</div>
@@ -34,7 +36,7 @@ if (isset($_GET["task"])) {
 			case "create":
 				// Put Code for this task, basically HTML
 ?>
- <!-- HTML GOES HERE -->
+
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Task Heading</h1>
@@ -43,8 +45,10 @@ if (isset($_GET["task"])) {
                     <!-- Content Row -->
                     <div class="row">
 						<div class="card shadow mb-4" style="width: 100%;">
-							<div class="card-body" >
+							<div class="card-body">
+									<!--- EDIT IN THIS SECTION --->
 									<pre>CREATE ASSETS</pre>
+									<!--- END - EDIT IN THIS SECTION --->
 							</div>
 						</div>
 					</div>
