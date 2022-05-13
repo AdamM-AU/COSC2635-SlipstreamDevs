@@ -437,6 +437,11 @@ if(isset($_GET['module'])) {
 	case 'groupMod':
 		require('modules/groupMod.php');
 		break;
+		
+	// Asset Module
+	case 'assetMod':
+		require('modules/assetMod.php');
+		break;		
 	
 	default:
 		// Adam - Just another hidden Gem :D
