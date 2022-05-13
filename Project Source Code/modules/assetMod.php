@@ -21,10 +21,8 @@ if (isset($_GET["task"])) {
 
                     <!-- Content Row -->
                     <div class="row">
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
+						<div class="card shadow mb-4" style="width: 100%;">
+							<div class="card-body" >
 									<pre>LIST ALL ASSETS</pre>
 							</div>
 						</div>
