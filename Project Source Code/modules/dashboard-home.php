@@ -86,13 +86,9 @@
                                 <div class="card-body">
                                     <p>Today you have 10 drivers for 13 available Vehicles</p>
 
-                                    <div class="mb-0"></div>
-								</div>   
-							</div>
+                                    <div class="mb-0"></p>
+                               
 						</div>
-						
-                    <!-- Content Row -->
-                    <div class="row">						
 						<!-- Content Column -->
 						<div class="col-lg-6 mb-4">
                             <!-- Approach -->
@@ -106,29 +102,29 @@
                     </div>
                                 <div class="card-body">
                                     <p>15/5/2022</p>
-                                    <p class="mb-1">The Tasmanian Government and National Heavy Vehicle Regulator (NHVR) are urging all road users to take care around heavy vehicles, ahead of the 2022 National Road Safety Week.</p>
+                                    <p class="mb-0">The Tasmanian Government and National Heavy Vehicle Regulator (NHVR) are urging all road users to take care around heavy vehicles, ahead of the 2022 National Road Safety Week.
 
-									<p class="mb-1">Tasmanian Deputy Premier and Infrastructure and Transport Minister Michael Ferguson said it was a timely reminder for all drivers to familiarise themselves with driving safely around heavy vehicles.</p>
+Tasmanian Deputy Premier and Infrastructure and Transport Minister Michael Ferguson said it was a timely reminder for all drivers to familiarise themselves with driving safely around heavy vehicles.
 
-									<p class="mb-1">“There were four deaths from crashes involving heavy vehicles last year,” Mr Ferguson said. “No death on our roads is acceptable.</p>
+“There were four deaths from crashes involving heavy vehicles last year,” Mr Ferguson said. “No death on our roads is acceptable.
 
-									<p class="mb-1">“I want all road users to recognise that trucks take longer to stop, have large blind spots and require extra care when overtaking. Often a truck crash can be avoided if light vehicle drivers are aware of the dangers of driving around a truck.</p>
+“I want all road users to recognise that trucks take longer to stop, have large blind spots and require extra care when overtaking. Often a truck crash can be avoided if light vehicle drivers are aware of the dangers of driving around a truck.
 
-									<p class="mb-1">“This National Road Safety Week, we are joining with the NHVR to promote driving safely around heavy vehicles and share vital information that could save the life of your family or friends.</p>
+“This National Road Safety Week, we are joining with the NHVR to promote driving safely around heavy vehicles and share vital information that could save the life of your family or friends.
 
-									<p class="mb-1">“All drivers should reflect on the role they play in making our roads safer for everyone.”</p>
+“All drivers should reflect on the role they play in making our roads safer for everyone.”
 
-									<p class="mb-1">According to the Bureau of Infrastructure and Transport Research Economics (BITRE), there were 160 fatalities in crashes involving heavy vehicles in 2021 across Australia, with four in Tasmania, compared to three in Tasmania in 2020 and five in 2019.</p>
+According to the Bureau of Infrastructure and Transport Research Economics (BITRE), there were 160 fatalities in crashes involving heavy vehicles in 2021 across Australia, with four in Tasmania, compared to three in Tasmania in 2020 and five in 2019.
 
-									<p class="mb-1">The NHVR has a range of information to help light vehicle drivers drive safely around trucks, including the We Need Space information and Don’t Muck With A Truck tips for young drivers.</p>
+The NHVR has a range of information to help light vehicle drivers drive safely around trucks, including the We Need Space information and Don’t Muck With A Truck tips for young drivers.
 
-									<p class="mb-1">NHVR CEO Sal Petroccitto said National Road Safety Week was also a timely reminder for truck drivers to make sure they were operating safety.</p>
+NHVR CEO Sal Petroccitto said National Road Safety Week was also a timely reminder for truck drivers to make sure they were operating safety.
 
-									<p class="mb-1">“To support National Road Safety Week, our staff will be out and about across the country, so no matter which major freight route you’re travelling on, drop in for a chat,” Mr Petroccitto said.</p>
+“To support National Road Safety Week, our staff will be out and about across the country, so no matter which major freight route you’re travelling on, drop in for a chat,” Mr Petroccitto said.
 
-									<p class="mb-1">“It’s important for our team to not only answer heavy vehicle questions and support drivers, but also get feedback from the industry.”</p>
+“It’s important for our team to not only answer heavy vehicle questions and support drivers, but also get feedback from the industry.”
 
-									<p class="mb-1">“I encourage you all to go along.”</p>
+“I encourage you all to go along.”</p>
                                 </div>
                             </div>
 						</div>
