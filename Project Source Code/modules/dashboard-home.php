@@ -23,7 +23,7 @@
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
                                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                            aria-valumax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,8 +84,8 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Drivers available</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>Idris attempts to do something idk</p>
-                                    <p class="mb-0">lol</p>
+                                    <p>Today you have 10 drivers for 13 available Vehicles</p>
+                                    <p class="mb-0"></p>
                                 </div>
                             </div>
 						</div>
