@@ -281,8 +281,8 @@ if (isset($_GET["logout"])) { //Set but Empty
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">May 30th 2022 </div>
+                                        <span class="font-weight-bold">New Safety recalls have been released!</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
