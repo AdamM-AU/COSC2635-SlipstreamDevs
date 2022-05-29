@@ -96,6 +96,10 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Heavy vehicle safety focus for National Road Safety Week</h6>
                                 </div>
+							</div>
+						</div>
+
+                    </div>
                                 <div class="card-body">
                                     <p>15/5/2022</p>
                                     <p class="mb-0">The Tasmanian Government and National Heavy Vehicle Regulator (NHVR) are urging all road users to take care around heavy vehicles, ahead of the 2022 National Road Safety Week.
