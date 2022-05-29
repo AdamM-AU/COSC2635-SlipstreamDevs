@@ -84,7 +84,6 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Drivers available</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p> something</p>
                                     <p>Today you have 10 drivers for 13 available Vehicles</p>
 
                                     <div class="mb-0"></div>
