@@ -84,8 +84,8 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Drivers available</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>Idris attempts to do something idk</p>
-                                    <p class="mb-0">lol</p>
+                                    <p> something</p>
+                                    <p class="mb-0"></p>
                                 </div>
                             </div>
 						</div>
