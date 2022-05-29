@@ -84,8 +84,12 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Drivers available</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>Idris attempts to do something idk</p>
-                                    <p class="mb-0">lol</p>
+<<<<<<< HEAD
+                                    <p> something</p>
+=======
+                                    <p>Today you have 10 drivers for 13 available Vehicles</p>
+>>>>>>> af0a0da1e833be3889da9ab3c0b06d24e86aeab4
+                                    <p class="mb-0"></p>
                                 </div>
                             </div>
 						</div>
@@ -94,14 +98,33 @@
                             <!-- Approach -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Development News</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Heavy vehicle safety focus for National Road Safety Week</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
-                                        Bootstrap framework, especially the utility classes.</p>
+                                    <p>15/5/2022</p>
+                                    <p class="mb-0">The Tasmanian Government and National Heavy Vehicle Regulator (NHVR) are urging all road users to take care around heavy vehicles, ahead of the 2022 National Road Safety Week.
+
+Tasmanian Deputy Premier and Infrastructure and Transport Minister Michael Ferguson said it was a timely reminder for all drivers to familiarise themselves with driving safely around heavy vehicles.
+
+“There were four deaths from crashes involving heavy vehicles last year,” Mr Ferguson said. “No death on our roads is acceptable.
+
+“I want all road users to recognise that trucks take longer to stop, have large blind spots and require extra care when overtaking. Often a truck crash can be avoided if light vehicle drivers are aware of the dangers of driving around a truck.
+
+“This National Road Safety Week, we are joining with the NHVR to promote driving safely around heavy vehicles and share vital information that could save the life of your family or friends.
+
+“All drivers should reflect on the role they play in making our roads safer for everyone.”
+
+According to the Bureau of Infrastructure and Transport Research Economics (BITRE), there were 160 fatalities in crashes involving heavy vehicles in 2021 across Australia, with four in Tasmania, compared to three in Tasmania in 2020 and five in 2019.
+
+The NHVR has a range of information to help light vehicle drivers drive safely around trucks, including the We Need Space information and Don’t Muck With A Truck tips for young drivers.
+
+NHVR CEO Sal Petroccitto said National Road Safety Week was also a timely reminder for truck drivers to make sure they were operating safety.
+
+“To support National Road Safety Week, our staff will be out and about across the country, so no matter which major freight route you’re travelling on, drop in for a chat,” Mr Petroccitto said.
+
+“It’s important for our team to not only answer heavy vehicle questions and support drivers, but also get feedback from the industry.”
+
+“I encourage you all to go along.”</p>
                                 </div>
                             </div>
 						</div>
