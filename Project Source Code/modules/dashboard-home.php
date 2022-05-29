@@ -102,7 +102,30 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Heavy vehicle safety focus for National Road Safety Week</h6>
                                 </div>
                                 <div class="card-body">
+                                    <p>15/5/2022</p>
+                                    <p>The Tasmanian Government and National Heavy Vehicle Regulator (NHVR) are urging all road users to take care around heavy vehicles, ahead of the 2022 National Road Safety Week.</p>
 
+									<p>Tasmanian Deputy Premier and Infrastructure and Transport Minister Michael Ferguson said it was a timely reminder for all drivers to familiarise themselves with driving safely around heavy vehicles.</p>
+
+									<p>There were four deaths from crashes involving heavy vehicles last year, Mr Ferguson said. “No death on our roads is acceptable.</p>
+
+									<p>I want all road users to recognise that trucks take longer to stop, have large blind spots and require extra care when overtaking. Often a truck crash can be avoided if light vehicle drivers are aware of the dangers of driving around a truck.</p>
+
+									<p>This National Road Safety Week, we are joining with the NHVR to promote driving safely around heavy vehicles and share vital information that could save the life of your family or friends.</p>
+
+									<p>All drivers should reflect on the role they play in making our roads safer for everyone.</p>
+
+									<p>According to the Bureau of Infrastructure and Transport Research Economics (BITRE), there were 160 fatalities in crashes involving heavy vehicles in 2021 across Australia, with four in Tasmania, compared to three in Tasmania in 2020 and five in 2019.</p>
+
+									<p>The NHVR has a range of information to help light vehicle drivers drive safely around trucks, including the We Need Space information and Don’t Muck With A Truck tips for young drivers.</p>
+
+									<p>NHVR CEO Sal Petroccitto said National Road Safety Week was also a timely reminder for truck drivers to make sure they were operating safety.</p>
+
+									<p>To support National Road Safety Week, our staff will be out and about across the country, so no matter which major freight route you’re travelling on, drop in for a chat, Mr Petroccitto said.</p>
+
+									<p>It’s important for our team to not only answer heavy vehicle questions and support drivers, but also get feedback from the industry.</p>
+
+									<p>I encourage you all to go along.</p>
                                 </div>
                             </div>
 						</div>
